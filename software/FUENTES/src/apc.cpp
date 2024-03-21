@@ -13,6 +13,10 @@ APC::APC(const vector<string> & file_names, long seed)
         process_partition(file_names, i, training, testing);
         training_sets.push_back(training);
         testing_sets.push_back(testing);
+        training.input.clear();
+        training.output.clear();
+        testing.output.clear();
+        testing.output.clear();
     }
     add_metaheuristics();
     // num_sets = 1;

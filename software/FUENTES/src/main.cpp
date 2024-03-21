@@ -37,28 +37,26 @@ void show_results(Dataset_name dataset_name, vector<vector<Result>> & results)
                  << (i+1)                           << setw(15)
                  << results[i][j].metrics.tasa_clas << setw(15)
                  << results[i][j].metrics.tasa_red  << setw(15)
-                 << results[i][j].metrics.fitness   << setw(15);
-            cout << "Weights: ";
+                 << results[i][j].metrics.fitness   << endl;
+        }
+        cout << "Mean:"               << setw(53)
+             << (sum_tasa_clas * aux) << setw(15)
+             << (sum_tasa_red  * aux) << setw(15)
+             << (sum_fitness   * aux) << endl;
+        cout << endl;
+        for (int i = 0; i < num_sets; ++i) {
+            cout << "Weights partition " << i << ": " ;
             for (int k = 0; k < top; ++k) {
                 cout << results[i][j].w[k] << ",";
             }
             cout << results[i][j].w[top];
             cout << endl;
         }
-        cout << "Mean:"               << setw(53)
-             << (sum_tasa_clas * aux) << setw(15)
-             << (sum_tasa_red  * aux) << setw(15)
-             << (sum_fitness   * aux) << endl;
         cout << ".........................................................................................." << endl;
         sum_tasa_clas = 0;
         sum_tasa_red = 0;
         sum_fitness = 0;
     }
-}
-
-void show_weights()
-{
-
 }
 
 int main(int argc, char** argv)
