@@ -12,15 +12,15 @@ Local_search::Local_search(string name, const Data * training, double fit_parame
     Random::seed(seed);
 }
 
-void Local_search::gen_ini_sol(vector<double> & sol) const
-{
-    sol = Random::get<vector>(0.0, 0.1, num_attributes);
-}
-
-void Local_search::gen_neighbour(const vector<double> & actual_sol, vector<double> & neighbour, int pos, normal_distribution<double> distribution) const
+void Local_search::gen_neighbour(const vector<double> & actual_sol, vector<double> & neighbour, int pos, normal_distribution<double> & distribution) const
 {
     neighbour = actual_sol;
     neighbour[pos] += Random::get(distribution);
+    if (neighbour[pos] < 0.0) {
+        neighbour[pos] = 0.0;
+    } else if (neighbour[pos] > 1.0) {
+        neighbour[pos] = 1.0;
+    }
 }
 
 void Local_search::compute_weights()
@@ -35,17 +35,19 @@ void Local_search::compute_weights()
     vector<double> neighbour;
     vector<int> permutation;
 
+    Metrics m;
+
     bool better_sol = false;
 
     for (int i = 0; i < num_attributes; i++) {
         permutation.push_back(i);
     }
 
-    gen_ini_sol(actual_sol);
+    actual_sol = Random::get<vector>(0.0, 1.0, num_attributes);
 
     int i = 0;
     double fitness_neighbour = -1.0;
-    double fitness_act_sol = compute_fitness(*training, actual_sol).fitness;
+    double fitness_act_sol = compute_fitness(*training, actual_sol, m);
     num_evaluations++;
     do {
         Random::shuffle(permutation);
@@ -55,7 +57,7 @@ void Local_search::compute_weights()
         {
             gen_neighbour(actual_sol ,neighbour, i, distribution);
             num_neighbours_gen++;
-            fitness_neighbour = compute_fitness(*training, neighbour).fitness;
+            fitness_neighbour = compute_fitness(*training, neighbour, m);
             num_evaluations++;
             if (fitness_neighbour > fitness_act_sol) {
                 better_sol = true;

@@ -1,13 +1,12 @@
 #include "../inc/metaheuristics.hpp"
 
 Metaheuristics::Metaheuristics(string name, const Data * training, double fit_parameter)
-{   
+{
     this->name = name;
     this->fit_parameter = fit_parameter;
     this->training = training;
     this->num_attributes = training->input[0].size();
     this->weights = vector<double>(num_attributes, 0.0);
-    this->tasa_red = 0.0;
     this->trained = false;
 }
 
@@ -23,24 +22,24 @@ double Metaheuristics::distance(const vector<double> &a, const vector<double> &b
 
 string Metaheuristics::classify(const vector<double> & example, const vector<double> & w) const
 {
+    // considerar hacer otra version para contemplar one-live-out y ser mas eficiente
+    // evitas llamar dos veces a distancia
     string target;
     auto min_distance = DBL_MAX;
     double d = -1.0;
     unsigned int num_records = training->input.size();
     if (!trained) {
         for (int i = 0; i < num_records; i++) {
-            if (example != training->input[i]) {
-                d = distance(example, training->input[i], w);
-                if (d < min_distance) {
-                    target = training->output[i];
-                    min_distance = d;
-                }
+            d = distance(example, training->input[i], w);
+            if (d < min_distance && d > 0) {
+                target = training->output[i];
+                min_distance = d;
             }
         }
     } else {
         for (int i = 0; i < num_records; i++) {
             d = distance(example, training->input[i], w);
-            if (d < min_distance && d != 0) {   // d != 0 ??
+            if (d < min_distance) {
                 target = training->output[i];
                 min_distance = d;
             }
@@ -72,23 +71,24 @@ double Metaheuristics::compute_tasa_red(const vector<double> & w) const
     return(100.0*(double(num_low_attributes)/num_attributes));
 }
 
-Metrics Metaheuristics::compute_fitness(const Data & data, const vector<double> & w)
+double Metaheuristics::compute_fitness(const Data & data, const vector<double> & w,  Metrics & metrics)
 {
     double t_clas = compute_tasa_clas(data, w);
-    double t_red = tasa_red;
-    if (!trained) {
-        t_red = compute_tasa_red(w);
+    double t_red = compute_tasa_red(w);
+    double fitness = (fit_parameter * t_clas) + ((1.0 - fit_parameter) * t_red);
+    if (trained) {
+        metrics = Metrics(t_clas, t_red, fitness);
     }
-    double fitness = fit_parameter * t_clas + (1 - fit_parameter) * t_red;
-    return {t_clas, t_red, fitness};
+    return fitness;
 }
 
 Result Metaheuristics::train()
 {
     compute_weights();
-    tasa_red = compute_tasa_red(weights);
     trained = true;
-    return {compute_fitness(*training, weights), weights};
+    Metrics metrics;
+    compute_fitness(*training, weights, metrics);
+    return {name, metrics, weights};
 }
 
 Result Metaheuristics::test(const Data & testing)
@@ -96,5 +96,7 @@ Result Metaheuristics::test(const Data & testing)
     if (!trained) {
         train();
     }
-    return {compute_fitness(testing, weights), weights};
+    Metrics metrics;
+    compute_fitness(testing, weights, metrics);
+    return {name, metrics, weights};
 }

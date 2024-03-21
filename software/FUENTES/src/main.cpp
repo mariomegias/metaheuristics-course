@@ -1,36 +1,77 @@
 #include "../inc/apc.hpp"
+#include <iomanip>
 
-void show_train_results(vector<Result> & train_results) 
+void show_results(Dataset_name dataset_name, vector<vector<Result>> & results)
 {
-    cout << "////////       TRAIN          ///////////" << endl;
-    unsigned int num_results = train_results.size();
-    for (int i = 0; i < num_results; i++) {
-        cout << "----------------------------------------" << endl;
-        cout << "ALGORITMO " << i << ":" << endl;
-        cout << "Tasa de Clasificación: " << train_results[i].metrics.tasa_clas << endl;
-        cout << "Tasa de Reducción: " << train_results[i].metrics.tasa_red << endl;
-        cout << "Fitness: " << train_results[i].metrics.fitness << endl;
-        cout << endl;
+    string name;
+    switch (dataset_name) {
+        case Dataset_name::ecoli:           name = "ecoli        "; break;
+        case Dataset_name::parkinsons:      name = "parkinsons   "; break;
+        case Dataset_name::breast_cancer:   name = "breast-cancer"; break;
+    }
+
+    unsigned int num_sets = results.size();
+    unsigned int num_mh = results[0].size();
+    unsigned int num_attributes = results[0][0].w.size();
+    unsigned int top = num_attributes - 1;
+
+    double tasa_clas = -1;
+    double tasa_red = -1;
+    double fitness = -1;
+    double sum_tasa_clas = 0;
+    double sum_tasa_red = 0;
+    double sum_fitness = 0;
+
+    double aux = 1.0/double(num_sets);
+
+    cout << fixed << setprecision(2);
+//  cout << scientific;
+
+    for (int j = 0; j < num_mh; j++) {
+        for (int i = 0; i < num_sets; ++i) {
+            sum_tasa_clas += results[i][j].metrics.tasa_clas;
+            sum_tasa_red += results[i][j].metrics.tasa_red;
+            sum_fitness += results[i][j].metrics.fitness;
+            cout << name                            << setw(15)
+                 << results[i][j].name_mh           << setw(15)
+                 << (i+1)                           << setw(15)
+                 << results[i][j].metrics.tasa_clas << setw(15)
+                 << results[i][j].metrics.tasa_red  << setw(15)
+                 << results[i][j].metrics.fitness   << setw(15);
+            cout << "Weights: ";
+            for (int k = 0; k < top; ++k) {
+                cout << results[i][j].w[k] << ",";
+            }
+            cout << results[i][j].w[top];
+            cout << endl;
+        }
+        cout << "Mean:"               << setw(53)
+             << (sum_tasa_clas * aux) << setw(15)
+             << (sum_tasa_red  * aux) << setw(15)
+             << (sum_fitness   * aux) << endl;
+        cout << ".........................................................................................." << endl;
+        sum_tasa_clas = 0;
+        sum_tasa_red = 0;
+        sum_fitness = 0;
     }
 }
 
-void show_test_results(vector<Result> & test_results) 
+void show_weights()
 {
-    cout << "////////       TEST          ///////////" << endl;
-    unsigned int num_results = test_results.size();
-    for (int i = 0; i < num_results; i++) {
-        cout << "----------------------------------------" << endl;
-        cout << "ALGORITMO " << i << ":" << endl;
-        cout << "Tasa de Clasificación: " << test_results[i].metrics.tasa_clas << endl;
-        cout << "Tasa de Reducción: " << test_results[i].metrics.tasa_red << endl;
-        cout << "Fitness: " << test_results[i].metrics.fitness << endl;
-        cout << endl;
-    }
+
 }
 
-int main()
+int main(int argc, char** argv)
 {
-    // path realtive to binary file
+    if (argc != 2)
+    {
+        cerr << "Error in parameters, introduce only the name of the program and the seed: "
+             << "\t./program_name <seed>" << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    string curr_arg;
+    long seed = stol(argv[1]);
 
     vector<string> ecoli;
     ecoli.push_back("Instancias_APC/ecoli_1.arff");
@@ -53,27 +94,32 @@ int main()
     breast.push_back("Instancias_APC/breast-cancer_4.arff");
     breast.push_back("Instancias_APC/breast-cancer_5.arff");
 
-    vector<vector<string>> datasets;
-//    datasets.push_back(ecoli);
-    datasets.push_back(parkinsons);
-//    datasets.push_back(breast);
+    vector<vector<string>> data_sets;
+    data_sets.push_back(ecoli);
+    data_sets.push_back(parkinsons);
+    data_sets.push_back(breast);
 
-    int test_position = 3;
-    long seed = 123;
+    vector<vector<Result>> train_results;
+    vector<vector<Result>> test_results;
 
-    vector<Result> train_results;
-    vector<Result> test_results;
+    cout << ".........................................................................................." << endl;
+    cout << "Seed: " << seed << endl;
+    cout << ".........................................................................................." << endl;
+    cout << "Dataset" << setw(21)
+         << "Algorithm" << setw(15 )
+         << "Partition" << setw(15 )
+         << "%_class" << setw(15)
+         << "%_red" << setw(15 )
+         << "Fitness" << setw(15) << endl;
+        // T (ms)
+    cout << ".........................................................................................." << endl;
 
-    unsigned num_datasets = datasets.size();
-    for (int i = 0; i < num_datasets; i++) {
-        cout << "--------------------------------------------------------------------------------------------" << endl;
-        APC apc(datasets[i], test_position, seed);
-        apc.train();
+    unsigned int num_data_sets = data_sets.size();
+    for (int i = 0; i < num_data_sets; ++i) {
+        APC apc(data_sets[i], seed);
         apc.test();
-        apc.get_train_results(train_results);
         apc.get_test_results(test_results);
-        show_train_results(train_results);
-        show_test_results(test_results);
+        show_results(Dataset_name(i), test_results);
     }
 
     return EXIT_SUCCESS;

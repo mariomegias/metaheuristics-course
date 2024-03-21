@@ -52,14 +52,16 @@ void Greedy_relief::compute_weights()
     unsigned int num_records = training->input.size();
     for (int i = 0; i < num_records; i++) {
         compute_nearest_friend(training->input[i], training->output[i], nearest_friend);
-        compute_nearest_enemy(training->input[i], training->output[i], nearest_enemy);
-        for (int j = 0; j < num_attributes; j++) {
-            weights[j] += abs(training->input[i][j] - nearest_enemy[j]) - abs(training->input[i][j] - nearest_friend[j]);
+        if (!nearest_friend.empty()) {
+            compute_nearest_enemy(training->input[i], training->output[i], nearest_enemy);
+            for (int j = 0; j < num_attributes; j++) {
+                weights[j] += abs(training->input[i][j] - nearest_enemy[j]) - abs(training->input[i][j] - nearest_friend[j]);
+            }
         }
     }
 
     double max = weights[0];
-    for (int i = 0; i < num_attributes; i++) {
+    for (int i = 1; i < num_attributes; i++) {
         if (weights[i] > max) {
             max = weights[i];
         }

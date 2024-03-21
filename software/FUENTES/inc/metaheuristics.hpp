@@ -14,17 +14,16 @@ protected:
     const Data * training;
     unsigned int num_attributes;
     vector<double> weights;
-    double tasa_red;
     bool trained;
+    // double tasa_red
 
     virtual void compute_weights() = 0;
-    Metrics compute_fitness(const Data & data, const vector<double> & w);
+    double compute_fitness(const Data & data, const vector<double> & w, Metrics & metrics);
     
 public:
     Metaheuristics(string name, const Data * training, double fit_parameter);
     Result train();
     Result test(const Data & testing);
-
 
 private:
     string classify(const vector<double> & example, const vector<double> & w) const;
