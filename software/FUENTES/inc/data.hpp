@@ -13,6 +13,10 @@ struct Data
 {
     vector<vector<double>> input;
     vector<string> output;
+    void clear() {
+        input.clear();
+        output.clear();
+    }
 };
 
 struct Metrics

@@ -45,7 +45,7 @@ void show_results(Dataset_name dataset_name, vector<vector<Result>> & results)
              << (sum_fitness   * aux) << endl;
         cout << endl;
         for (int i = 0; i < num_sets; ++i) {
-            cout << "Weights partition " << i << ": " ;
+            cout << "Weights partition " << (i+1) << ": " ;
             for (int k = 0; k < top; ++k) {
                 cout << results[i][j].w[k] << ",";
             }
@@ -103,12 +103,12 @@ int main(int argc, char** argv)
     cout << ".........................................................................................." << endl;
     cout << "Seed: " << seed << endl;
     cout << ".........................................................................................." << endl;
-    cout << "Dataset" << setw(21)
+    cout << "Dataset"   << setw(21)
          << "Algorithm" << setw(15 )
          << "Partition" << setw(15 )
-         << "%_class" << setw(15)
-         << "%_red" << setw(15 )
-         << "Fitness" << setw(15) << endl;
+         << "%_class"   << setw(15)
+         << "%_red"     << setw(15 )
+         << "Fitness"   << setw(15) << endl;
         // T (ms)
     cout << ".........................................................................................." << endl;
 
