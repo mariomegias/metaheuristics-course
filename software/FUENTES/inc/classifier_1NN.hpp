@@ -6,10 +6,10 @@
 class Classifier_1NN : public Metaheuristics
 {
 private:
-    void compute_weights();
+    void compute_weights() override;
 
 public:
-    Classifier_1NN(string name, const Data * training, double fit_parameter);
+    Classifier_1NN(const string & name, const Data * training);
 };
 
 #endif // ifndef CLASSIFYING_1NN_HPP

@@ -6,8 +6,8 @@ const double Local_search::MAX_EVALUATIONS = 1500;
 
 using Random = effolkronium::random_static;
 
-Local_search::Local_search(string name, const Data * training, double fit_parameter, long seed)
-: Metaheuristics(name, training, fit_parameter)
+Local_search::Local_search(const string & name, const Data * training, long seed)
+: Metaheuristics(name, training)
 {
     Random::seed(seed);
 }
@@ -49,11 +49,12 @@ void Local_search::compute_weights()
     double fitness_neighbour = -1.0;
     double fitness_act_sol = compute_fitness(*training, actual_sol, m);
     num_evaluations++;
+
     do {
         Random::shuffle(permutation);
         i = 0;
         better_sol = false;
-        while (!better_sol && (num_neighbours_gen <= MAX_NEIGHBOURS_GEN) && (num_evaluations < MAX_EVALUATIONS))
+        while (!better_sol && (num_neighbours_gen < MAX_NEIGHBOURS_GEN) && (num_evaluations < MAX_EVALUATIONS))
         {
             gen_neighbour(actual_sol ,neighbour, i, distribution);
             num_neighbours_gen++;
@@ -72,6 +73,27 @@ void Local_search::compute_weights()
         }
         num_neighbours_gen = 0;
     } while (better_sol && (num_evaluations < MAX_EVALUATIONS));
+
+//    Random::shuffle(permutation);
+//    while ((num_neighbours_gen < MAX_NEIGHBOURS_GEN) && (num_evaluations < MAX_EVALUATIONS))
+//    {
+//        gen_neighbour(actual_sol ,neighbour, i, distribution);
+//        num_neighbours_gen++;
+//        fitness_neighbour = compute_fitness(*training, neighbour, m);
+//        num_evaluations++;
+//        if (fitness_neighbour > fitness_act_sol) {
+//            actual_sol = neighbour;
+//            fitness_act_sol = fitness_neighbour;
+//            num_neighbours_gen = 0;
+//            Random::shuffle(permutation);
+//        } else {
+//            i++;
+//            if (i == num_attributes) {
+//                i = 0;
+//                Random::shuffle(permutation);
+//            }
+//        }
+//    }
 
     weights = actual_sol;
 }

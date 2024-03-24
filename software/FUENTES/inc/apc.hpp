@@ -22,8 +22,6 @@ private:
     long seed;
     bool trained;
 
-    static const double FIT_PARAMETER;
-
     void normalize(vector<Data> & data);
     void add_metaheuristics();
     void process_partition(const vector<Data> & data, int pos_test, Data & training, Data & testing);

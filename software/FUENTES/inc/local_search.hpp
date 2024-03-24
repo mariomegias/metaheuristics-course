@@ -12,10 +12,10 @@ private:
     static const double MAX_EVALUATIONS;
 
     void gen_neighbour(const vector<double> & actual_sol, vector<double> & neighbour, int pos, normal_distribution<double> & distribution) const;
-    void compute_weights();
+    void compute_weights() override;
 
 public:
-    Local_search(string name, const Data * training,double fit_parameter, long seed);
+    Local_search(const string & name, const Data * training, long seed);
 };
 
 #endif // ifndef LOCAL_SEARCH_HPP

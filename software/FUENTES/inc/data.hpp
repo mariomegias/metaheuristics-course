@@ -1,11 +1,14 @@
 #ifndef DATA_HPP
 #define DATA_HPP
 
+#include <chrono>
+#include <ctime>
 #include <string>
-#include <utility>
+#include <thread>
 #include <vector>
 
 using namespace std;
+using namespace std::chrono;
 
 enum class Dataset_name {ecoli, parkinsons, breast_cancer};
 
@@ -34,9 +37,11 @@ struct Result
     string name_mh;
     Metrics metrics;
     vector<double> w;
+    milliseconds time;
+
     Result() = default;
-    Result(const string & name_mh, const Metrics & metrics, const vector<double> & w)
-    :  name_mh(name_mh), metrics(metrics.tasa_clas, metrics.tasa_red, metrics.fitness), w(w) {}
+    Result(const string & name_mh, const Metrics & metrics, const vector<double> & w, const milliseconds & time)
+    :   name_mh(name_mh), metrics(metrics.tasa_clas, metrics.tasa_red, metrics.fitness), w(w), time(time) {}
 };
 
 #endif // ifndef DATA_HPP

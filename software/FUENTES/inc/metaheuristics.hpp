@@ -4,24 +4,25 @@
 #include "data.hpp"
 #include <cfloat>
 #include <cmath>
-#include <vector>
 
 class Metaheuristics 
 {
 protected:
     string name;
-    double fit_parameter;
     const Data * training;
     unsigned int num_attributes;
     vector<double> weights;
     bool trained;
     // double tasa_red
 
+    static const double FIT_PARAMETER;
+    static const double W_THRESHOLD;
+
     virtual void compute_weights() = 0;
     double compute_fitness(const Data & data, const vector<double> & w, Metrics & metrics);
     
 public:
-    Metaheuristics(string name, const Data * training, double fit_parameter);
+    Metaheuristics(const string & name, const Data * training);
     Result train();
     Result test(const Data & testing);
 

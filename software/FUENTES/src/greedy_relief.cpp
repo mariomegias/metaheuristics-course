@@ -1,7 +1,7 @@
 #include "../inc/greedy_relief.hpp"
 
-Greedy_relief::Greedy_relief(string name, const Data * training, double fit_parameter)
-: Metaheuristics(name, training, fit_parameter) {}
+Greedy_relief::Greedy_relief(const string & name, const Data * training)
+: Metaheuristics(name, training) {}
 
 double Greedy_relief::euclidean_distance(const vector<double> & a, const vector<double> & b) const
 {
@@ -33,6 +33,7 @@ void Greedy_relief::compute_nearest_friend(const vector<double> & example, const
 {
     auto min_distance = DBL_MAX;
     double distance = -1.0;
+    bool found_nearest_friend = false;
     unsigned int num_records = training->input.size();
     for (int i = 0; i < num_records; i++) {
         if (training->output[i] == target && (example != training->input[i])) {
@@ -40,8 +41,12 @@ void Greedy_relief::compute_nearest_friend(const vector<double> & example, const
             if (distance < min_distance) {
                 min_distance = distance;
                 nearest_friend = training->input[i];
+                found_nearest_friend = true;
             }
         }
+    }
+    if (!found_nearest_friend) {
+        nearest_friend.clear();
     }
 }
 
@@ -52,7 +57,7 @@ void Greedy_relief::compute_weights()
     unsigned int num_records = training->input.size();
     for (int i = 0; i < num_records; i++) {
         compute_nearest_friend(training->input[i], training->output[i], nearest_friend);
-        if (!nearest_friend.empty()) {
+        if (!nearest_friend.empty()) {  // nearest_friend not found (excluding the example itself)
             compute_nearest_enemy(training->input[i], training->output[i], nearest_enemy);
             for (int j = 0; j < num_attributes; j++) {
                 weights[j] += abs(training->input[i][j] - nearest_enemy[j]) - abs(training->input[i][j] - nearest_friend[j]);

@@ -1,12 +1,10 @@
 #include "../inc/apc.hpp"
 
-const double APC::FIT_PARAMETER = 0.75;
-
 APC::APC(const vector<string> & file_names, long seed)
 {
     this->seed = seed;
     this->trained = false;
-    this->num_sets = file_names.size(); // ??
+    this->num_sets = file_names.size();
 
     vector<Data> data;
     for (int i = 0; i < num_sets; i++) {
@@ -20,8 +18,8 @@ APC::APC(const vector<string> & file_names, long seed)
     Data testing;
     for (int i = 0; i < num_sets; i++) {
         process_partition(data, i, training, testing);
-        training_sets.push_back(training);
-        testing_sets.push_back(testing);
+        this->training_sets.push_back(training);
+        this->testing_sets.push_back(testing);
         training.clear();
         testing.clear();
     }
@@ -33,11 +31,12 @@ APC::APC(const vector<string> & file_names, long seed)
 void APC::normalize(vector<Data> & data)
 {
     unsigned int num_attributes = data[0].input[0].size();
+    unsigned int num_records = 0;
     vector<double> max(num_attributes, DBL_MIN);
     vector<double> min(num_attributes, DBL_MAX);
 
     for (int i = 0; i < num_sets; i++) {
-        unsigned int num_records = data[i].input.size();
+        num_records = data[i].input.size();
         for (int j = 0; j < num_attributes; j++) {
             for (int k = 0; k < num_records; k++) {
                 if (data[i].input[k][j] > max[j]) {
@@ -52,7 +51,7 @@ void APC::normalize(vector<Data> & data)
 
     double quot = 1.0;
     for (int i = 0; i < num_sets; i++) {
-        unsigned int num_records = data[i].input.size();
+        num_records = data[i].input.size();
         for (int j = 0; j < num_attributes; j++) {
             if (min[j] < max[j])
             {
@@ -92,9 +91,9 @@ void APC::process_partition(const vector<Data> & data, int pos_test, Data & trai
 void APC::add_metaheuristics() {
     vector<Metaheuristics *> mh4set;
     for (int i = 0; i < num_sets; i++) {
-        mh4set.push_back(new Classifier_1NN("1NN", &training_sets[i], FIT_PARAMETER));
-        mh4set.push_back(new Greedy_relief("Greedy", &training_sets[i], FIT_PARAMETER));
-        mh4set.push_back(new Local_search("Local search", &training_sets[i], FIT_PARAMETER, seed));
+        mh4set.push_back(new Classifier_1NN("1NN", &training_sets[i]));
+        mh4set.push_back(new Greedy_relief("Greedy", &training_sets[i]));
+        mh4set.push_back(new Local_search("Local search", &training_sets[i], seed));
         mh.push_back(mh4set);
         mh4set.clear();
     }

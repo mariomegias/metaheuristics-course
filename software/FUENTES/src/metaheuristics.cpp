@@ -1,21 +1,23 @@
 #include "../inc/metaheuristics.hpp"
 
-Metaheuristics::Metaheuristics(string name, const Data * training, double fit_parameter)
+const double Metaheuristics::FIT_PARAMETER = 0.75;
+const double Metaheuristics::W_THRESHOLD = 0.1;
+
+Metaheuristics::Metaheuristics(const string & name, const Data * training)
 {
     this->name = name;
-    this->fit_parameter = fit_parameter;
     this->training = training;
     this->num_attributes = training->input[0].size();
     this->weights = vector<double>(num_attributes, 0.0);
     this->trained = false;
 }
 
-double Metaheuristics::distance(const vector<double> &a, const vector<double> &b, const vector<double> & w) const
+double Metaheuristics::distance(const vector<double> & a, const vector<double> & b, const vector<double> & w) const
 {
     double sum = 0.0;
     unsigned int size = a.size();
     for (int i = 0; i < size; i++) {
-        if (w[i] >= 0.1) {
+        if (w[i] >= W_THRESHOLD) {
             sum += w[i] * pow((a[i] - b[i]), 2);
         }
     }
@@ -66,7 +68,7 @@ double Metaheuristics::compute_tasa_red(const vector<double> & w) const
 {
     int num_low_attributes = 0;
     for (int i = 0; i < num_attributes; i++) {
-        if (w[i] < 0.1) {
+        if (w[i] < W_THRESHOLD) {
             num_low_attributes++;
         }
     }
@@ -77,7 +79,7 @@ double Metaheuristics::compute_fitness(const Data & data, const vector<double> &
 {
     double t_clas = compute_tasa_clas(data, w);
     double t_red = compute_tasa_red(w);
-    double fitness = (fit_parameter * t_clas) + ((1.0 - fit_parameter) * t_red);
+    double fitness = (FIT_PARAMETER * t_clas) + ((1.0 - FIT_PARAMETER) * t_red);
     if (trained) {
         metrics = Metrics(t_clas, t_red, fitness);
     }
@@ -86,19 +88,31 @@ double Metaheuristics::compute_fitness(const Data & data, const vector<double> &
 
 Result Metaheuristics::train()
 {
+    auto ini = high_resolution_clock::now();
+
     compute_weights();
     Metrics metrics;
     compute_fitness(*training, weights, metrics);
     trained = true;
-    return {name, metrics, weights};
+
+    auto fin = high_resolution_clock::now();
+    milliseconds time = duration_cast<milliseconds>(fin - ini);
+
+    return {name, metrics, weights, time};
 }
 
 Result Metaheuristics::test(const Data & testing)
 {
+    auto ini = high_resolution_clock::now();
+
     if (!trained) {
         train();
     }
     Metrics metrics;
     compute_fitness(testing, weights, metrics);
-    return {name, metrics, weights};
+
+    auto fin = high_resolution_clock::now();
+    milliseconds time = duration_cast<milliseconds>(fin - ini);
+
+    return {name, metrics, weights, time};
 }
