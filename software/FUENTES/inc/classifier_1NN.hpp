@@ -1,5 +1,5 @@
-#ifndef CLASSIFYING_1NN_HPP
-#define CLASSIFYING_1NN_HPP
+#ifndef CLASSIFIER_1NN_HPP
+#define CLASSIFIER_1NN_HPP
 
 #include "metaheuristics.hpp"
 
@@ -12,4 +12,4 @@ public:
     Classifier_1NN(const string & name, const Data * training);
 };
 
-#endif // ifndef CLASSIFYING_1NN_HPP
+#endif // ifndef CLASSIFIER_1NN_HPP

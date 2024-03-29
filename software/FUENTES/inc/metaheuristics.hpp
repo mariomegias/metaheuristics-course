@@ -13,7 +13,7 @@ protected:
     unsigned int num_attributes;
     vector<double> weights;
     bool trained;
-    // double tasa_red
+    milliseconds training_time;
 
     static const double FIT_PARAMETER;
     static const double W_THRESHOLD;

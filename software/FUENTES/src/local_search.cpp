@@ -12,7 +12,7 @@ Local_search::Local_search(const string & name, const Data * training, long seed
     Random::seed(seed);
 }
 
-void Local_search::gen_neighbour(const vector<double> & actual_sol, vector<double> & neighbour, int pos, normal_distribution<double> & distribution) const
+void Local_search::gen_neighbour(const vector<double> & actual_sol, vector<double> & neighbour, unsigned int pos, normal_distribution<double> & distribution) const
 {
     neighbour = actual_sol;
     neighbour[pos] += Random::get(distribution);
@@ -45,7 +45,7 @@ void Local_search::compute_weights()
 
     actual_sol = Random::get<vector>(0.0, 1.0, num_attributes);
 
-    int i = 0;
+    unsigned int i = 0;
     double fitness_neighbour = -1.0;
     double fitness_act_sol = compute_fitness(*training, actual_sol, m);
     num_evaluations++;

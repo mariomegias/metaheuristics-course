@@ -32,7 +32,7 @@ string Metaheuristics::classify(const vector<double> & example, const vector<dou
     unsigned int num_records = training->input.size();
     if (!trained) {
         for (int i = 0; i < num_records; i++) {
-            if (example != training->input[i]) {    // one-live-out
+            if (example != training->input[i]) {    // live one out
                 d = distance(example, training->input[i], w);
                 if (d < min_distance) {
                     target = training->output[i];
@@ -43,7 +43,7 @@ string Metaheuristics::classify(const vector<double> & example, const vector<dou
     } else {
         for (int i = 0; i < num_records; i++) {
             d = distance(example, training->input[i], w);
-            if (d < min_distance) {
+            if (d < min_distance) { // d > 0.0
                 target = training->output[i];
                 min_distance = d;
             }
@@ -89,30 +89,21 @@ double Metaheuristics::compute_fitness(const Data & data, const vector<double> &
 Result Metaheuristics::train()
 {
     auto ini = high_resolution_clock::now();
-
     compute_weights();
+    auto fin = high_resolution_clock::now();
+    training_time = duration_cast<milliseconds>(fin - ini);
+    trained = true;
     Metrics metrics;
     compute_fitness(*training, weights, metrics);
-    trained = true;
-
-    auto fin = high_resolution_clock::now();
-    milliseconds time = duration_cast<milliseconds>(fin - ini);
-
-    return {name, metrics, weights, time};
+    return {name, metrics, weights, training_time};
 }
 
 Result Metaheuristics::test(const Data & testing)
 {
-    auto ini = high_resolution_clock::now();
-
     if (!trained) {
         train();
     }
     Metrics metrics;
     compute_fitness(testing, weights, metrics);
-
-    auto fin = high_resolution_clock::now();
-    milliseconds time = duration_cast<milliseconds>(fin - ini);
-
-    return {name, metrics, weights, time};
+    return {name, metrics, weights, training_time};
 }
