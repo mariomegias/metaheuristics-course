@@ -23,6 +23,60 @@ void Local_search::gen_neighbour(const vector<double> & actual_sol, vector<doubl
     }
 }
 
+//void Local_search::compute_weights()
+//{
+//    normal_distribution<double> distribution(MEAN, sqrt(VARIANCE));
+//
+//    unsigned int num_evaluations = 0;
+//    unsigned int num_neighbours_gen = 0;
+//    const unsigned int MAX_NEIGHBOURS_GEN = 20 * num_attributes;
+//
+//    vector<double> actual_sol;
+//    vector<double> neighbour;
+//    vector<int> permutation;
+//
+//    Metrics m;
+//
+//    bool better_sol = false;
+//
+//    for (int i = 0; i < num_attributes; i++) {
+//        permutation.push_back(i);
+//    }
+//
+//    actual_sol = Random::get<vector>(0.0, 1.0, num_attributes);
+//
+//    unsigned int i = 0;
+//    double fitness_neighbour = -1.0;
+//    double fitness_act_sol = compute_fitness(*training, actual_sol, m);
+//    num_evaluations++;
+//
+//    do {
+//        Random::shuffle(permutation);
+//        i = 0;
+//        better_sol = false;
+//        while (!better_sol && (num_neighbours_gen < MAX_NEIGHBOURS_GEN) && (num_evaluations < MAX_EVALUATIONS))
+//        {
+//            gen_neighbour(actual_sol ,neighbour, i, distribution);
+//            num_neighbours_gen++;
+//            fitness_neighbour = compute_fitness(*training, neighbour, m);
+//            num_evaluations++;
+//            if (fitness_neighbour > fitness_act_sol) {
+//                better_sol = true;
+//                actual_sol = neighbour;
+//                fitness_act_sol = fitness_neighbour;
+//            } else {
+//                i++;
+//                if (i == num_attributes) {
+//                    i = 0;
+//                }
+//            }
+//        }
+//        num_neighbours_gen = 0;
+//    } while (better_sol && (num_evaluations < MAX_EVALUATIONS));
+//
+//    weights = actual_sol;
+//}
+
 void Local_search::compute_weights()
 {
     normal_distribution<double> distribution(MEAN, sqrt(VARIANCE));
@@ -37,8 +91,6 @@ void Local_search::compute_weights()
 
     Metrics m;
 
-    bool better_sol = false;
-
     for (int i = 0; i < num_attributes; i++) {
         permutation.push_back(i);
     }
@@ -50,50 +102,26 @@ void Local_search::compute_weights()
     double fitness_act_sol = compute_fitness(*training, actual_sol, m);
     num_evaluations++;
 
-    do {
-        Random::shuffle(permutation);
-        i = 0;
-        better_sol = false;
-        while (!better_sol && (num_neighbours_gen < MAX_NEIGHBOURS_GEN) && (num_evaluations < MAX_EVALUATIONS))
-        {
-            gen_neighbour(actual_sol ,neighbour, i, distribution);
-            num_neighbours_gen++;
-            fitness_neighbour = compute_fitness(*training, neighbour, m);
-            num_evaluations++;
-            if (fitness_neighbour > fitness_act_sol) {
-                better_sol = true;
-                actual_sol = neighbour;
-                fitness_act_sol = fitness_neighbour;
-            } else {
-                i++;
-                if (i == num_attributes) {
-                    i = 0;
-                }
+    Random::shuffle(permutation);
+    while ((num_neighbours_gen < MAX_NEIGHBOURS_GEN) && (num_evaluations < MAX_EVALUATIONS))
+    {
+        gen_neighbour(actual_sol ,neighbour, i, distribution);
+        num_neighbours_gen++;
+        fitness_neighbour = compute_fitness(*training, neighbour, m);
+        num_evaluations++;
+        if (fitness_neighbour > fitness_act_sol) {
+            actual_sol = neighbour;
+            fitness_act_sol = fitness_neighbour;
+            num_neighbours_gen = 0;
+            Random::shuffle(permutation);
+            i = 0;
+        } else {
+            i++;
+            if (i == num_attributes) {
+                i = 0;
             }
         }
-        num_neighbours_gen = 0;
-    } while (better_sol && (num_evaluations < MAX_EVALUATIONS));
-
-//    Random::shuffle(permutation);
-//    while ((num_neighbours_gen < MAX_NEIGHBOURS_GEN) && (num_evaluations < MAX_EVALUATIONS))
-//    {
-//        gen_neighbour(actual_sol ,neighbour, i, distribution);
-//        num_neighbours_gen++;
-//        fitness_neighbour = compute_fitness(*training, neighbour, m);
-//        num_evaluations++;
-//        if (fitness_neighbour > fitness_act_sol) {
-//            actual_sol = neighbour;
-//            fitness_act_sol = fitness_neighbour;
-//            num_neighbours_gen = 0;
-//            Random::shuffle(permutation);
-//        } else {
-//            i++;
-//            if (i == num_attributes) {
-//                i = 0;
-//                Random::shuffle(permutation);
-//            }
-//        }
-//    }
+    }
 
     weights = actual_sol;
 }

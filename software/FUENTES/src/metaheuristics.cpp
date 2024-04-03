@@ -32,9 +32,9 @@ string Metaheuristics::classify(const vector<double> & example, const vector<dou
     unsigned int num_records = training->input.size();
     if (!trained) {
         for (int i = 0; i < num_records; i++) {
-            if (example != training->input[i]) {    // live one out
+            if (example != training->input[i]) {    // leave one out
                 d = distance(example, training->input[i], w);
-                if (d < min_distance) {
+                if (d < min_distance && d > 0.0) {
                     target = training->output[i];
                     min_distance = d;
                 }
@@ -43,7 +43,7 @@ string Metaheuristics::classify(const vector<double> & example, const vector<dou
     } else {
         for (int i = 0; i < num_records; i++) {
             d = distance(example, training->input[i], w);
-            if (d < min_distance) { // d > 0.0
+            if (d < min_distance && d > 0.0) {
                 target = training->output[i];
                 min_distance = d;
             }

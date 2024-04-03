@@ -36,7 +36,7 @@ void Greedy_relief::compute_nearest_friend(const vector<double> & example, const
     bool found_nearest_friend = false;
     unsigned int num_records = training->input.size();
     for (int i = 0; i < num_records; i++) {
-        if (training->output[i] == target && (example != training->input[i])) {
+        if ((training->output[i] == target) && (example != training->input[i])) {
             distance = euclidean_distance(training->input[i], example);
             if (distance < min_distance) {
                 min_distance = distance;
