@@ -16,13 +16,13 @@ double Greedy_relief::euclidean_distance(const vector<double> & a, const vector<
 void Greedy_relief::compute_nearest_enemy(const vector<double> & example, const string & target, vector<double> & nearest_enemy)
 {
     auto min_distance = DBL_MAX;
-    double distance = -1.0;
+    double dist = -1.0;
     unsigned int num_records = training->input.size();
     for (int i = 0; i < num_records; i++) {
         if (training->output[i] != target) {
-            distance = euclidean_distance(training->input[i], example);
-            if (distance < min_distance) {
-                min_distance = distance;
+            dist = euclidean_distance(training->input[i], example);
+            if (dist < min_distance) {
+                min_distance = dist;
                 nearest_enemy = training->input[i];
             }
         }
@@ -32,14 +32,14 @@ void Greedy_relief::compute_nearest_enemy(const vector<double> & example, const 
 void Greedy_relief::compute_nearest_friend(const vector<double> & example, const string & target, vector<double> & nearest_friend)
 {
     auto min_distance = DBL_MAX;
-    double distance = -1.0;
+    double dist = -1.0;
     bool found_nearest_friend = false;
     unsigned int num_records = training->input.size();
     for (int i = 0; i < num_records; i++) {
         if ((training->output[i] == target) && (example != training->input[i])) {
-            distance = euclidean_distance(training->input[i], example);
-            if (distance < min_distance) {
-                min_distance = distance;
+            dist = euclidean_distance(training->input[i], example);
+            if (dist < min_distance) {
+                min_distance = dist;
                 nearest_friend = training->input[i];
                 found_nearest_friend = true;
             }

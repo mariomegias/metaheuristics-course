@@ -3,7 +3,7 @@
 
 #include "arff_file.hpp"
 #include "classifier_1NN.hpp"
-#include "data.hpp"
+#include "structures.hpp"
 #include "greedy_relief.hpp"
 #include "local_search.hpp"
 

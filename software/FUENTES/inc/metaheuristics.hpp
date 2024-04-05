@@ -1,7 +1,7 @@
 #ifndef METAHEURISTICS_HPP
 #define METAHEURISTICS_HPP
 
-#include "data.hpp"
+#include "structures.hpp"
 #include <cfloat>
 #include <cmath>
 

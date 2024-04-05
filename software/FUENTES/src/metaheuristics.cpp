@@ -28,24 +28,24 @@ string Metaheuristics::classify(const vector<double> & example, const vector<dou
 {
     string target;
     auto min_distance = DBL_MAX;
-    double d = -1.0;
+    double dist = -1.0;
     unsigned int num_records = training->input.size();
     if (!trained) {
         for (int i = 0; i < num_records; i++) {
             if (example != training->input[i]) {    // leave one out
-                d = distance(example, training->input[i], w);
-                if (d < min_distance && d > 0.0) {
+                dist = distance(example, training->input[i], w);
+                if (dist < min_distance && dist > 0.0) {
                     target = training->output[i];
-                    min_distance = d;
+                    min_distance = dist;
                 }
             }
         }
     } else {
         for (int i = 0; i < num_records; i++) {
-            d = distance(example, training->input[i], w);
-            if (d < min_distance && d > 0.0) {
+            dist = distance(example, training->input[i], w);
+            if (dist < min_distance && dist > 0.0) {
                 target = training->output[i];
-                min_distance = d;
+                min_distance = dist;
             }
         }
     }

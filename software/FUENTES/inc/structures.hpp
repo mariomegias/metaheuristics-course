@@ -1,5 +1,5 @@
-#ifndef DATA_HPP
-#define DATA_HPP
+#ifndef STRUCTURES_HPP
+#define STRUCTURES_HPP
 
 #include <chrono>
 #include <ctime>
@@ -44,6 +44,6 @@ struct Result
     :   name_mh(name_mh), metrics(metrics.tasa_clas, metrics.tasa_red, metrics.fitness), w(w), time(time) {}
 };
 
-#endif // ifndef DATA_HPP
+#endif // ifndef STRUCTURES_HPP
 
 

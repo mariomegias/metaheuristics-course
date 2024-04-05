@@ -1,8 +1,8 @@
 #ifndef LOCAL_SEARCH_HPP
 #define LOCAL_SEARCH_HPP
 
-#include "../inc/metaheuristics.hpp"
-#include "../inc/random.hpp"
+#include "metaheuristics.hpp"
+#include "random.hpp"
 
 class Local_search : public Metaheuristics
 {
@@ -11,7 +11,7 @@ private:
     static const double VARIANCE;
     static const double MAX_EVALUATIONS;
 
-    void gen_neighbour(const vector<double> & actual_sol, vector<double> & neighbour, unsigned int pos, normal_distribution<double> & distribution) const;
+    void gen_neighbour(const vector<double> & actual_solution, vector<double> & neighbour, unsigned int pos, normal_distribution<double> & normal) const;
     void compute_weights() override;
 
 public:

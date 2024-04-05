@@ -1,7 +1,7 @@
 #ifndef ARFF_FILE_HPP
 #define ARFF_FILE_HPP
 
-#include "data.hpp"
+#include "structures.hpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
