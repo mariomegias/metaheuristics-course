@@ -1,0 +1,61 @@
+La estructura de directorios del proyecto es la siguiente:
+
+    - Directorio BIN: contiene el ejectuable del programa, APC_problem, junto con el directorio
+    InstanciasAPC, con los ficheros ARRF de las tres bases de datos mencionadas en la descripción,
+    y el directorio Resultados con ficheros en texto plano que almacenan en formato tabulado los datos
+    obtenidos de la ejecución del programa.
+
+    - Directorio FUENTES: Contiene el código fuente del proyecto. En el directorio inc se encuentran los
+    ficheros de cabecera .hpp y en el directorio src los ficheros .cpp con las implementaciones y el
+    programa principal main.cpp.
+
+    - Al mismo nivel que los directorios anteriores se encuentra el fichero CMakeLists.txt que se usa
+    para la compilación del proyecto.
+
+Diseño del código fuente:
+Para implementar la práctica he seguido el paradigma de Programación Orientada a Objetos. A continuación
+procedemos a describir el contenido de cada un fichero con las clases y estructuras creadas:
+
+    - structures.hpp: contiene estructuras y tipos enumerados. Destacamos Data, creada para almacenar los
+    datos de un conjunto de instancias, y Result, para almacenar los resultados acerca de un algoritmo
+    en concreto (métricas, pesos obtenidos y tiempo de entrenamiento).
+
+    - arff_file.hpp/.cpp: contiene la clase ARFF_file, que recibe un fichero en formato ARRF y tranforma
+    sus datos en una estructura de tipo Data.
+
+    - metaheuristics.hpp/.cpp: contiene la clase abstracta Metaheuristics. Cada algoritmo se implementa
+    como una clase que hereda de esta. Recibe un dato de tipo Data con los datos de entrenamiento, e
+    implementa todas las métricas de evaluación. Caben destacar tres métodos suyos:
+
+        - compute_weights: método virtual puro que será implementado por cada clase que herede de esta,
+        desarrollando el algoritmo correspondiente para obtener los pesos del problema.
+
+        - train: se encarga de llamar al método anterior y recoger el resultado del entrenamiento y lo
+        devuelve en un dato de tipo Result.
+
+        - test: recibe un dato de tipo Data con los datos de test para testear la clasificación que se
+        obtiene con los pesos obtenidos en el entrenamiento, y lo devuelve en un dato de tipo Result.
+        Si antes de llamar a la función no se ha ejecutado el algoritmo de cálculo de los pesos, se
+        llama previamente al método train.
+
+    - classifier_1NN.hpp/.cpp, greedy_relief.hpp/.cpp, local_search.hpp/.cpp: Implementan clases que
+    heredan de la clase Metaheuristics, Classifier_1NN, Greedy_relief y Local_search. Cada una realiza
+    su propia implementación del método compute_weights, siguiendo el algoritmo correspondiente.
+
+    - apc.hpp/.cpp: contiene la clase APC que recibe una semilla y los ficheros de una de las bases de
+    datos e implementa 5-fold cross validation a cada uno de los diferentes algoritmos implementados para
+    resolver el problema. Caben citar los siguientes métodos:
+
+        - train y test: se encarga de llamar a los correspondientes métodos train y test de cada
+        metaheurística para cada partición de los datos.
+
+        - get_train_results y get_test_results: Recogen los resultados de entrenamiento y de test.
+        Reciben un parámetro de entrada/salida que consiste en una matriz de tipo Result donde cada
+        columna hace referencia a una metaheurística, y cada fila a una de las particiones de los datos.
+        De esta forma, la entrada (i,j) de la matriz contendrá los resultados de la metaheurística j
+        aplicada a la partición i.
+
+        - add\_metaheuristics: añade las metaheurísticas a aplicar al problema del APC.
+
+    - main.cpp: crea un objeto de tipo APC para cada base de datos y se encarga de mostrar los resultados
+    obtenidos en formato tabulado.

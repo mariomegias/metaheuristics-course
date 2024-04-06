@@ -21,7 +21,7 @@ void Greedy_relief::compute_nearest_enemy(const vector<double> & example, const 
     for (int i = 0; i < num_records; i++) {
         if (training->output[i] != target) {
             dist = euclidean_distance(training->input[i], example);
-            if (dist < min_distance) {
+            if (dist < min_distance && dist > 0.0) {
                 min_distance = dist;
                 nearest_enemy = training->input[i];
             }
@@ -38,7 +38,7 @@ void Greedy_relief::compute_nearest_friend(const vector<double> & example, const
     for (int i = 0; i < num_records; i++) {
         if ((training->output[i] == target) && (example != training->input[i])) {
             dist = euclidean_distance(training->input[i], example);
-            if (dist < min_distance) {
+            if (dist < min_distance && dist > 0.0) {
                 min_distance = dist;
                 nearest_friend = training->input[i];
                 found_nearest_friend = true;
@@ -73,7 +73,7 @@ void Greedy_relief::compute_weights()
     }
 
     for (int i = 0; i < num_attributes; i++) {
-        if (weights[i] < 0) {
+        if (weights[i] < 0.0) {
             weights[i] = 0.0;
         } else {
             weights[i] = weights[i] / max;

@@ -18,7 +18,7 @@ void show_results(Dataset_name dataset_name, vector<vector<Result>> & results, c
     double sum_tasa_clas = 0;
     double sum_tasa_red = 0;
     double sum_fitness = 0;
-    long sum_time = 0;
+    double sum_time = 0;
     double aux = 1.0/double(num_sets);
 
     cout << fixed << setprecision(2);
@@ -28,21 +28,22 @@ void show_results(Dataset_name dataset_name, vector<vector<Result>> & results, c
             sum_tasa_clas += results[i][j].metrics.tasa_clas;
             sum_tasa_red += results[i][j].metrics.tasa_red;
             sum_fitness += results[i][j].metrics.fitness;
-            sum_time += results[i][j].time.count();
+            auto time_sec = double(results[i][j].time.count())/1000;
+            sum_time += time_sec;
             cout << name                            << setw(15)
                  << results[i][j].name_mh           << setw(15)
                  << (i+1)                           << setw(15)
                  << results[i][j].metrics.tasa_clas << setw(15)
                  << results[i][j].metrics.tasa_red  << setw(15)
                  << results[i][j].metrics.fitness   << setw(15)
-                 << scientific << double(results[i][j].time.count())
+                 << scientific << time_sec
                  << fixed << setprecision(2) << endl;
         }
         cout << "Mean:"               << setw(53)
              << (sum_tasa_clas * aux) << setw(15)
              << (sum_tasa_red  * aux) << setw(15)
              << (sum_fitness   * aux) << setw(15)
-             << scientific << (double(sum_time) * aux)
+             << scientific << (sum_time * aux)
              << fixed << setprecision(2) << endl << endl;
         for (int i = 0; i < num_sets; ++i) {
             cout << "Weights partition " << (i+1) << ": " ;
@@ -108,7 +109,7 @@ int main(int argc, char** argv)
     cout << "Seed: " << seed << endl;
     cout << sep << endl;
     cout << "Dataset" << setw(21) << "Algorithm" << setw(15 ) << "Partition" << setw(15)
-         << "%_class" << setw(15) << "%_red"     << setw(15 ) << "Fitness"   << setw(15) << "T (ms)" << endl;
+         << "%_class" << setw(15) << "%_red"     << setw(15 ) << "Fitness"   << setw(15) << "T (s)" << endl;
     cout << sep << endl;
 
     unsigned int num_data_sets = data_sets.size();
