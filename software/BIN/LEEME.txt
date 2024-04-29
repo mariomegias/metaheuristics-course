@@ -16,9 +16,10 @@ Diseño del código fuente:
 Para implementar la práctica he seguido el paradigma de Programación Orientada a Objetos. A continuación
 procedemos a describir el contenido de cada un fichero con las clases y estructuras creadas:
 
-    - structures.hpp: contiene estructuras y tipos enumerados. Destacamos Data, creada para almacenar los
-    datos de un conjunto de instancias, y Result, para almacenar los resultados acerca de un algoritmo
-    en concreto (métricas, pesos obtenidos y tiempo de entrenamiento).
+    - structures.hpp:  contiene estructuras y tipos enumerados. Destacamos Data, creada para
+    almacenar los datos de un conjunto de instancias, y Result, para almacenar los resultados
+    acerca de un algoritmo en concreto (métricas, pesos obtenidos y tiempo de cálculo de los
+    pesos).
 
     - arff_file.hpp/.cpp: contiene la clase ARFF_file, que recibe un fichero en formato ARRF y tranforma
     sus datos en una estructura de tipo Data.
@@ -30,13 +31,13 @@ procedemos a describir el contenido de cada un fichero con las clases y estructu
         - compute_weights: método virtual puro que será implementado por cada clase que herede de esta,
         desarrollando el algoritmo correspondiente para obtener los pesos del problema.
 
-        - train: se encarga de llamar al método anterior y recoger el resultado del entrenamiento y lo
-        devuelve en un dato de tipo Result.
+        - train: se encarga de llamar al método anterior y recoger los resultados usando el conjunto
+        de entrenamiento, devolviéndolos en un dato de tipo Result.
 
-        - test: recibe un dato de tipo Data con los datos de test para testear la clasificación que se
-        obtiene con los pesos obtenidos en el entrenamiento, y lo devuelve en un dato de tipo Result.
-        Si antes de llamar a la función no se ha ejecutado el algoritmo de cálculo de los pesos, se
-        llama previamente al método train.
+        - test:  recibe un dato de tipo Data con los datos de test para testear las métricas que se
+        obtienen con los pesos obtenidos, y las devuelve en un dato de tipo Result, junto con
+        los valores restantes. Si antes de llamar a la función no se ha ejecutado el algoritmo de
+        cálculo de los pesos, se llama previamente al método train.
 
     - classifier_1NN.hpp/.cpp, greedy_relief.hpp/.cpp, local_search.hpp/.cpp: Implementan clases que
     heredan de la clase Metaheuristics, Classifier_1NN, Greedy_relief y Local_search. Cada una realiza

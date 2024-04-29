@@ -12,6 +12,10 @@ set(SOURCE_FILES
         ${SRC_DIR}/local_search.cpp
         ${SRC_DIR}/metaheuristics.cpp
         ${SRC_DIR}/apc.cpp
+        ${SRC_DIR}/ag.cpp
+        ${SRC_DIR}/agg.cpp
+        ${SRC_DIR}/age.cpp
+        ${SRC_DIR}/crossing.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
