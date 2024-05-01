@@ -15,7 +15,9 @@ set(SOURCE_FILES
         ${SRC_DIR}/ag.cpp
         ${SRC_DIR}/agg.cpp
         ${SRC_DIR}/age.cpp
-        ${SRC_DIR}/crossing.cpp
+        ${SRC_DIR}/blx.cpp
+        ${SRC_DIR}/ca.cpp
+        ${SRC_DIR}/tournament.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})

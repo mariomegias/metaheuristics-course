@@ -1,6 +1,8 @@
 #ifndef APC_HPP
 #define APC_HPP
 
+#include "age.hpp"
+#include "agg.hpp"
 #include "arff_file.hpp"
 #include "classifier_1NN.hpp"
 #include "structures.hpp"

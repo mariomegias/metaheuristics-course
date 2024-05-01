@@ -91,9 +91,13 @@ void APC::process_partition(const vector<Data> & data, int pos_test, Data & trai
 void APC::add_metaheuristics() {
     vector<Metaheuristics *> mh4set;
     for (int i = 0; i < num_sets; i++) {
-        mh4set.push_back(new Classifier_1NN("1NN", &training_sets[i]));
-        mh4set.push_back(new Greedy_relief("Greedy", &training_sets[i]));
-        mh4set.push_back(new Local_search("Local search", &training_sets[i], seed));
+//        mh4set.push_back(new Classifier_1NN("1NN", &training_sets[i]));
+//        mh4set.push_back(new Greedy_relief("Greedy", &training_sets[i]));
+//        mh4set.push_back(new Local_search("Local search", &training_sets[i], seed));
+        mh4set.push_back(new AGG("AGG-BLX", &training_sets[i], seed, CrossingType::BLX));
+        mh4set.push_back(new AGG("AGG-CA", &training_sets[i], seed, CrossingType::CA));
+        mh4set.push_back(new AGE("AGE-BLX", &training_sets[i], seed, CrossingType::BLX));
+        mh4set.push_back(new AGE("AGE-CA", &training_sets[i], seed, CrossingType::CA));
         mh.push_back(mh4set);
         mh4set.clear();
     }

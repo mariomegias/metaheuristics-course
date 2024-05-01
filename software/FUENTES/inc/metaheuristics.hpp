@@ -20,6 +20,7 @@ protected:
 
     virtual void compute_weights() = 0;
     double compute_fitness(const Data & data, const vector<double> & w, Metrics & metrics);
+    double compute_fitness(const Data & data, const vector<double> & w);
     
 public:
     Metaheuristics(const string & name, const Data * training);

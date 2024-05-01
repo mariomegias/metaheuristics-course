@@ -1,13 +1,13 @@
 #include "../inc/apc.hpp"
 #include <iomanip>
 
-void show_results(Dataset_name dataset_name, vector<vector<Result>> & results, const string & sep)
+void show_results(Dataset dataset_name, vector<vector<Result>> & results, const string & sep)
 {
     string name;
     switch (dataset_name) {
-        case Dataset_name::ecoli:           name = "ecoli        "; break;
-        case Dataset_name::parkinsons:      name = "parkinsons   "; break;
-        case Dataset_name::breast_cancer:   name = "breast-cancer"; break;
+        case Dataset::ecoli: name = "ecoli        "; break;
+        case Dataset::parkinsons: name = "parkinsons   "; break;
+        case Dataset::breast_cancer: name = "breast-cancer"; break;
     }
 
     unsigned int num_sets = results.size();
@@ -117,7 +117,7 @@ int main(int argc, char** argv)
         APC apc(data_sets[i], seed);
         apc.test();
         apc.get_test_results(test_results);
-        show_results(Dataset_name(i), test_results, sep);
+        show_results(Dataset(i), test_results, sep);
     }
 
     return EXIT_SUCCESS;

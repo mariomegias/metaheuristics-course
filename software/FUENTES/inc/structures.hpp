@@ -10,7 +10,9 @@
 using namespace std;
 using namespace std::chrono;
 
-enum class Dataset_name {ecoli, parkinsons, breast_cancer};
+enum class Dataset {ecoli, parkinsons, breast_cancer};
+
+enum class CrossingType {BLX, CA};
 
 struct Data
 {
@@ -42,6 +44,24 @@ struct Result
     Result() = default;
     Result(const string & name_mh, const Metrics & metrics, const vector<double> & w, const milliseconds & time)
     :   name_mh(name_mh), metrics(metrics.tasa_clas, metrics.tasa_red, metrics.fitness), w(w), time(time) {}
+};
+
+struct Population
+{
+    vector<vector<double>> chromosomes;
+    vector<double> fitness;
+
+    Population() = default;
+    Population(const vector<vector<double>> & chromosomes, const vector<double> & fitness)
+    :   chromosomes(chromosomes), fitness(fitness) {}
+
+    unsigned size() const {
+        return chromosomes.size();
+    }
+
+    unsigned n_genes() const {
+        return chromosomes[0].size();
+    }
 };
 
 #endif // ifndef STRUCTURES_HPP

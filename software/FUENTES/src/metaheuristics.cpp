@@ -86,6 +86,12 @@ double Metaheuristics::compute_fitness(const Data & data, const vector<double> &
     return fitness;
 }
 
+double Metaheuristics::compute_fitness(const Data & data, const vector<double> & w)
+{
+    Metrics metrics;
+    return compute_fitness(data, w, metrics);
+}
+
 Result Metaheuristics::train()
 {
     auto ini = high_resolution_clock::now();
