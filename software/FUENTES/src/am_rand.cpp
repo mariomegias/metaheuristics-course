@@ -5,10 +5,14 @@ AM_Rand::AM_Rand(const string & name, const Data * training, long seed, Crossing
 
 void AM_Rand::exploitation(Population & population)
 {
-//    const unsigned N_EXPLOITATIONS = population.size();
-//    for (unsigned i = 0; i < N_EXPLOITATIONS; i++) {
-//        local_search.do_search(population.chromosomes[i]);
-//        population.fitness[i] = compute_fitness(*training, population.chromosomes[i]);
-//    }
+    const unsigned N_EXPLOITATIONS = population.size() * 0.1;
+
+    vector<unsigned> positions =
+            Random::get<vector>((unsigned)(0), (unsigned)(population.size()-1), N_EXPLOITATIONS);
+
+    for (unsigned i = 0; i < N_EXPLOITATIONS; i++) {
+        local_search.do_search(population.chromosomes[positions[i]]);
+        population.fitness[positions[i]] = compute_fitness(*training, population.chromosomes[positions[i]]);
+    }
 }
 
