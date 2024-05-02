@@ -17,6 +17,7 @@ private:
     CrossingType crossing_type;
     Crossing * crossing;
 
+protected:
     Population select() override;
     void cross(Population & parents) override;
     void replace(Population & children) override;

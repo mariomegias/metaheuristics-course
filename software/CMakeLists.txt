@@ -17,6 +17,10 @@ set(SOURCE_FILES
         ${SRC_DIR}/age.cpp
         ${SRC_DIR}/blx.cpp
         ${SRC_DIR}/ca.cpp
+        ${SRC_DIR}/am.cpp
+        ${SRC_DIR}/am_all.cpp
+        ${SRC_DIR}/am_rand.cpp
+        ${SRC_DIR}/am_best.cpp
         ${SRC_DIR}/tournament.cpp
 )
 

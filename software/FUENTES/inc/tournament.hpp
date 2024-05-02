@@ -16,7 +16,7 @@ private:
 public:
     Tournament();
     explicit Tournament(unsigned tournament_size);
-    unsigned get_pos_winner(const Population & population) const;
+    unsigned get_pos_winner(const Population & population);
 };
 
 

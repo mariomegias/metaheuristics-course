@@ -12,7 +12,7 @@ Tournament::Tournament(unsigned tournament_size)
     this->tournament_size = tournament_size;
 }
 
-unsigned Tournament::get_pos_winner(const Population & population) const
+unsigned Tournament::get_pos_winner(const Population & population)
 {
     vector<unsigned> positions =
             Random::get<vector>((unsigned)(0), (unsigned)(population.size()-1), tournament_size);

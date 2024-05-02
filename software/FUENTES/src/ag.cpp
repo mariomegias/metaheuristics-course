@@ -1,10 +1,10 @@
 #include "../inc/ag.hpp"
 
-const unsigned AG::POPULATION_SIZE = 50;
 const double AG::PROB_MUTATION_CHROMOSOME = 0.08;
 const double AG::MEAN = 0.0;
 const double AG::VARIANCE = 0.3;
 const double AG::MAX_EVALUATIONS = 1500;
+const unsigned AG::POPULATION_SIZE = 50;
 
 AG::AG(const string & name, const Data * training, long seed)
 : Metaheuristics(name, training)
@@ -35,27 +35,27 @@ void AG::mutation_operator(vector<double> & chromosome, unsigned pos_gene)
 
 void AG::mutate(Population & intermediate)
 {
-    unsigned n_chromosomes = intermediate.size();
-    unsigned n_genes = intermediate.n_genes();
+    const unsigned N_CHROMOSOMES = intermediate.size();
+    const unsigned N_GENES = intermediate.n_genes();
 
-    auto n_expected_mutations =
-            (unsigned)(round((double)(n_chromosomes * n_genes) * prob_mutation_gen));
+    const auto N_EXPECTED_MUTATIONS =
+            (unsigned)(round((double)(N_CHROMOSOMES * N_GENES) * prob_mutation_gen));
 
-    unsigned top_genes = n_genes - 1;
-    unsigned top_chromosomes = n_chromosomes - 1;
+    const unsigned TOP_GENES = N_GENES - 1;
+    const unsigned TOP_CHROMOSOMES = N_CHROMOSOMES - 1;
 
     unsigned pos_gene, pos_chromosome;
 
-    unsigned count_mutations = 0;
-    while (count_mutations < n_expected_mutations)
+    unsigned mutations_count = 0;
+    while (mutations_count < N_EXPECTED_MUTATIONS)
     {
-        pos_gene = Random::get<unsigned>(0, top_genes);
-        pos_chromosome = Random::get<unsigned>(0, top_chromosomes);
+        pos_gene = Random::get<unsigned>(0, TOP_GENES);
+        pos_chromosome = Random::get<unsigned>(0, TOP_CHROMOSOMES);
         mutation_operator(intermediate.chromosomes[pos_chromosome], pos_gene);
         intermediate.fitness[pos_chromosome] =
                 compute_fitness(*training, intermediate.chromosomes[pos_chromosome]);
 
-        count_mutations++;
+        mutations_count++;
     }
 }
 
