@@ -23,7 +23,7 @@ void Local_search::gen_neighbour(const vector<double> & actual_solution, vector<
     }
 }
 
-void Local_search::compute_weights()
+void Local_search::do_search(vector<double> & actual_solution)
 {
     normal_distribution<double> normal(MEAN, sqrt(VARIANCE));
 
@@ -31,21 +31,16 @@ void Local_search::compute_weights()
     unsigned int num_neighbors_gen = 0;
     const unsigned int MAX_NEIGHBORS_GEN = 20 * num_attributes;
 
-    vector<double> actual_solution;
     vector<double> neighbour;
     vector<int> permutation;
-
-    Metrics metrics;
 
     for (int i = 0; i < num_attributes; i++) {
         permutation.push_back(i);
     }
 
-    actual_solution = Random::get<vector>(0.0, 1.0, num_attributes);
-
     unsigned int pos = 0;
     double fitness_neighbour = -1.0;
-    double fitness_act_sol = compute_fitness(*training, actual_solution, metrics);
+    double fitness_act_sol = compute_fitness(*training, actual_solution);
     num_evaluations++;
 
     Random::shuffle(permutation);
@@ -53,7 +48,7 @@ void Local_search::compute_weights()
     {
         gen_neighbour(actual_solution , neighbour, pos, normal);
         num_neighbors_gen++;
-        fitness_neighbour = compute_fitness(*training, neighbour, metrics);
+        fitness_neighbour = compute_fitness(*training, neighbour);
         num_evaluations++;
         if (fitness_neighbour > fitness_act_sol) {
             actual_solution = neighbour;
@@ -68,7 +63,12 @@ void Local_search::compute_weights()
             }
         }
     }
+}
 
+void Local_search::compute_weights()
+{
+    vector<double> actual_solution = Random::get<vector>(0.0, 1.0, num_attributes);
+    do_search(actual_solution);
     weights = actual_solution;
 }
 

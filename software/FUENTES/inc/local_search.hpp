@@ -16,6 +16,7 @@ private:
 
 public:
     Local_search(const string & name, const Data * training, long seed);
+    void do_search(vector<double> & actual_solution);
 };
 
 #endif // ifndef LOCAL_SEARCH_HPP
