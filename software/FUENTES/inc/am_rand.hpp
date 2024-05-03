@@ -6,7 +6,8 @@
 class AM_Rand : public AM
 {
 private:
-    void exploitation(Population & population) override;
+    static const double PROB_SELECT_CHROMOSOME;
+    void exploitation(Population &population, unsigned &num_evaluations) override;
 
 public:
     AM_Rand(const string & name, const Data * training, long seed, CrossingType crossing_type);

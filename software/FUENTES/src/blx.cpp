@@ -1,5 +1,12 @@
 #include "../inc/blx.hpp"
 
+const double BLX::DEFAULT_ALPHA = 0.3;
+
+BLX::BLX()
+{
+    this->alpha = DEFAULT_ALPHA;
+}
+
 BLX::BLX(double alpha)
 {
     this->alpha = alpha;
@@ -18,6 +25,18 @@ void BLX::cross(vector<double> & chromosome_1, vector<double> & chromosome_2)
 
         chromosome_1[j] = Random::get<double>(c_min - I * alpha, c_max + I * alpha);
         chromosome_2[j] = Random::get<double>(c_min - I * alpha, c_max + I * alpha);
+
+        if (chromosome_1[j] < 0.0) {
+            chromosome_1[j] = 0.0;
+        } else if (chromosome_1[j] > 1.0) {
+            chromosome_1[j] = 1.0;
+        }
+
+        if (chromosome_2[j] < 0.0) {
+            chromosome_2[j] = 0.0;
+        } else if (chromosome_2[j] > 1.0) {
+            chromosome_2[j] = 1.0;
+        }
     }
 }
 

@@ -9,16 +9,18 @@
 class AGG : public AG
 {
 private:
-    static const double PROB_CROSSING;
-    static const unsigned TOURNAMENT_SIZE;
     static const unsigned N_CHROMOSOMES_SELECT;
+    static const unsigned TOURNAMENT_SIZE;
+    static const unsigned N_EXPECTED_CROSSINGS;
+    static const unsigned N_EXPECTED_MUTATIONS;
 
-    Tournament tournament;
     CrossingType crossing_type;
     Crossing * crossing;
+    Tournament tournament;
 
 protected:
     Population select() override;
+    void mutate(Population & intermediate) override;
     void cross(Population & parents) override;
     void replace(Population & children) override;
 

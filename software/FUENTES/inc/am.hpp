@@ -10,8 +10,10 @@ private:
     void compute_weights() override;
 
 protected:
+    unsigned max_neighbors_gen;
     Local_search local_search;
-    virtual void exploitation(Population & population) = 0;
+
+    virtual void exploitation(Population &population, unsigned &num_evaluations) = 0;
 
 public:
     AM(const string & name, const Data * training, long seed, CrossingType crossing_type);

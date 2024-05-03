@@ -6,7 +6,7 @@
 class AM_All : public AM
 {
 private:
-    void exploitation(Population & population) override;
+    void exploitation(Population &population, unsigned &num_evaluations) override;
 
 public:
     AM_All(const string & name, const Data * training, long seed, CrossingType crossing_type);

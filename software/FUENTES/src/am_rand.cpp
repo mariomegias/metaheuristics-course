@@ -1,18 +1,17 @@
 #include "../inc/am_rand.hpp"
 
+const double AM_Rand::PROB_SELECT_CHROMOSOME = 0.1;
+
 AM_Rand::AM_Rand(const string & name, const Data * training, long seed, CrossingType crossing_type)
 : AM(name, training, seed, crossing_type) {}
 
-void AM_Rand::exploitation(Population & population)
+void AM_Rand::exploitation(Population &population, unsigned &num_evaluations)
 {
-    const unsigned N_EXPLOITATIONS = population.size() * 0.1;
-
-    vector<unsigned> positions =
-            Random::get<vector>((unsigned)(0), (unsigned)(population.size()-1), N_EXPLOITATIONS);
-
-    for (unsigned i = 0; i < N_EXPLOITATIONS; i++) {
-        local_search.do_search(population.chromosomes[positions[i]]);
-        population.fitness[positions[i]] = compute_fitness(*training, population.chromosomes[positions[i]]);
+    const unsigned N_CHROMOSOMES = population.size();
+    for (unsigned i = 0; i < N_CHROMOSOMES; i++) {
+        if (Random::get(0.0, 1.0) < PROB_SELECT_CHROMOSOME) {
+            local_search.do_local_search(population.chromosomes[i], num_evaluations, max_neighbors_gen);
+        }
     }
 }
 

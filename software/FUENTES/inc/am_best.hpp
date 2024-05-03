@@ -5,7 +5,7 @@
 #include <queue>
 #include <utility>
 
-class Compare
+class Compare_AM
 {
 public:
     bool operator() (const pair<unsigned, double> & lhs, const pair<unsigned, double> & rhs) const {
@@ -16,7 +16,7 @@ public:
 class AM_Best : public AM
 {
 private:
-    void exploitation(Population & population) override;
+    void exploitation(Population &population, unsigned &num_evaluations) override;
 
 public:
     AM_Best(const string & name, const Data * training, long seed, CrossingType crossing_type);

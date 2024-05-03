@@ -3,6 +3,9 @@
 
 #include "age.hpp"
 #include "agg.hpp"
+#include "am_all.hpp"
+#include "am_best.hpp"
+#include "am_rand.hpp"
 #include "arff_file.hpp"
 #include "classifier_1NN.hpp"
 #include "structures.hpp"
