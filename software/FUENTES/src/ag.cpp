@@ -4,7 +4,7 @@ const double AG::MEAN = 0.0;
 const double AG::VARIANCE = 0.3;
 const double AG::PROB_MUTATION_CHROMOSOME = 0.08;
 
-const unsigned AG::MAX_EVALUATIONS = 1500;
+const unsigned AG::MAX_EVALUATIONS = 15000;
 const unsigned AG::POPULATION_SIZE = 50;
 
 AG::AG(const string & name, const Data * training, long seed)

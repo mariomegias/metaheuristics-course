@@ -2,7 +2,7 @@
 
 const double Local_search::MEAN = 0.0;
 const double Local_search::VARIANCE = 0.3;
-const double Local_search::MAX_EVALUATIONS = 1500;
+const double Local_search::MAX_EVALUATIONS = 15000;
 
 using Random = effolkronium::random_static;
 

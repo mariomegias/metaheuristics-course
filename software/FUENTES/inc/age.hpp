@@ -20,7 +20,6 @@ class AGE : public AG
 {
 private:
     static const unsigned N_CHROMOSOMES_SELECT;
-    static const unsigned TOURNAMENT_SIZE;
 
     CrossingType crossing_type;
     Crossing * crossing;

@@ -30,3 +30,4 @@ void AM::compute_weights()
 
     weights = current_population.chromosomes[get_pos_best(current_population)];
 }
+

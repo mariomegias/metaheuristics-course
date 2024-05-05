@@ -14,19 +14,21 @@ Tournament::Tournament(unsigned tournament_size)
 
 unsigned Tournament::get_pos_winner(const Population & population)
 {
-    vector<unsigned> positions =
-            Random::get<vector>((unsigned)(0), (unsigned)(population.size()-1), tournament_size);
+    const unsigned POS_LAST_CHROMOSOME = (population.size() - 1);
 
-    unsigned pos_winner = positions[0];
+    unsigned pos_winner = Random::get<unsigned>(0, POS_LAST_CHROMOSOME);
     double fitness_winner = population.fitness[pos_winner];
 
-    for (unsigned i = 1; i < tournament_size; i++)
-    {
-        if (fitness_winner < population.fitness[positions[i]])
-        {
-            fitness_winner = population.fitness[positions[i]];
-            pos_winner = i;
+    unsigned pos;
+
+    unsigned count = 1;
+    while (count < tournament_size) {
+        pos = Random::get<unsigned>(0, POS_LAST_CHROMOSOME);
+        if (fitness_winner < population.fitness[pos]) {
+            pos_winner = pos;
+            fitness_winner = population.fitness[pos];
         }
+        count++;
     }
 
     return pos_winner;

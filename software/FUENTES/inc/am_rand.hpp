@@ -7,6 +7,7 @@ class AM_Rand : public AM
 {
 private:
     static const double PROB_SELECT_CHROMOSOME;
+
     void exploitation(Population &population, unsigned &num_evaluations) override;
 
 public:

@@ -16,6 +16,8 @@ public:
 class AM_Best : public AM
 {
 private:
+    static const unsigned N_EXPLOITATIONS;
+
     void exploitation(Population &population, unsigned &num_evaluations) override;
 
 public:

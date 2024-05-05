@@ -10,7 +10,6 @@ class AGG : public AG
 {
 private:
     static const unsigned N_CHROMOSOMES_SELECT;
-    static const unsigned TOURNAMENT_SIZE;
     static const unsigned N_EXPECTED_CROSSINGS;
     static const unsigned N_EXPECTED_MUTATIONS;
 

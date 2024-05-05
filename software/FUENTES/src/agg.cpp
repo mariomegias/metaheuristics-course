@@ -1,14 +1,13 @@
 #include "../inc/agg.hpp"
 
 const unsigned AGG::N_CHROMOSOMES_SELECT = 50;
-const unsigned AGG::TOURNAMENT_SIZE = 3;
 const unsigned AGG::N_EXPECTED_CROSSINGS = 17;
 const unsigned AGG::N_EXPECTED_MUTATIONS = 4;
 
 AGG::AGG(const string & name, const Data * training, long seed, CrossingType crossing_type)
 : AG(name, training, seed)
 {
-    this->tournament = Tournament(TOURNAMENT_SIZE);
+    this->tournament = Tournament();
     this->crossing_type = crossing_type;
 
     switch (crossing_type)
@@ -24,7 +23,7 @@ AGG::AGG(const string & name, const Data * training, long seed, CrossingType cro
 
 Population AGG::select()
 {
-    unsigned pos_winner = 0;
+    unsigned pos_winner;
     vector<vector<double>> chromosomes;
     vector<double> fitness;
 
@@ -46,8 +45,8 @@ void AGG::cross(Population & parents)
 
 void AGG::mutate(Population & intermediate)
 {
-    const unsigned TOP_GENES = (intermediate.n_genes() - 1);
-    const unsigned TOP_CHROMOSOMES = (intermediate.size() - 1);
+    const unsigned TOP_GENES = (num_attributes - 1);
+    const unsigned TOP_CHROMOSOMES = (N_CHROMOSOMES_SELECT - 1);
 
     unsigned mutations_count = 0;
     while (mutations_count < N_EXPECTED_MUTATIONS)

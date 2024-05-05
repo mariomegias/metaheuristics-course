@@ -5,8 +5,7 @@ AM_All::AM_All(const string & name, const Data * training, long seed, CrossingTy
 
 void AM_All::exploitation(Population &population, unsigned &num_evaluations)
 {
-    const unsigned N_EXPLOITATIONS = population.size();
-    for (unsigned i = 0; i < N_EXPLOITATIONS; i++) {
+    for (unsigned i = 0; i < POPULATION_SIZE; i++) {
         local_search.do_local_search(population.chromosomes[i], num_evaluations, max_neighbors_gen);
     }
 }

@@ -1,12 +1,11 @@
 #include "../inc/age.hpp"
 
 const unsigned AGE::N_CHROMOSOMES_SELECT = 2;
-const unsigned AGE::TOURNAMENT_SIZE = 3;
 
 AGE::AGE(const string & name, const Data * training, long seed, CrossingType crossing_type)
 : AG(name, training, seed)
 {
-    this->tournament = Tournament(TOURNAMENT_SIZE);
+    this->tournament = Tournament();
     this->crossing_type = crossing_type;
 
     switch (crossing_type)
@@ -42,9 +41,8 @@ void AGE::cross(Population & parents)
 
 void AGE::mutate(Population & intermediate)
 {
-    const unsigned TOP_GENES = (intermediate.n_genes() - 1);
-    const unsigned N_CHROMOSOMES = intermediate.size();
-    for (int i = 0; i < N_CHROMOSOMES; i++) {
+    const unsigned TOP_GENES = (num_attributes - 1);
+    for (int i = 0; i < N_CHROMOSOMES_SELECT; i++) {
         if (Random::get(0.0, 1.0) < PROB_MUTATION_CHROMOSOME) {
             mutation_operator(intermediate.chromosomes[i], Random::get<unsigned>(0, TOP_GENES));
         }
