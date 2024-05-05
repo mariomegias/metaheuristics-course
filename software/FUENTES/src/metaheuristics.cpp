@@ -16,9 +16,11 @@ double Metaheuristics::distance(const vector<double> & a, const vector<double> &
 {
     double sum = 0.0;
     unsigned int size = a.size();
+    double dif;
     for (int i = 0; i < size; i++) {
         if (w[i] >= W_THRESHOLD) {
-            sum += w[i] * pow((a[i] - b[i]), 2);
+            dif = (a[i] - b[i]);
+            sum += w[i] * dif * dif;
         }
     }
     return sqrt(sum);
