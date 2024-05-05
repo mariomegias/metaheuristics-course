@@ -15,7 +15,10 @@ void AM_Best::exploitation(Population &population, unsigned &num_evaluations)
 
     unsigned count = 0;
     while (count < N_EXPLOITATIONS) {
-        local_search.do_local_search(population.chromosomes[ordering_pos_by_fit.top().first], num_evaluations, max_neighbors_gen);
+        local_search.do_local_search(population.chromosomes[ordering_pos_by_fit.top().first],
+                                     population.fitness[ordering_pos_by_fit.top().first],
+                                     num_evaluations, max_neighbors_gen);
+        evaluated_by_ls[ordering_pos_by_fit.top().first] = true;
         ordering_pos_by_fit.pop();
         count++;
     }

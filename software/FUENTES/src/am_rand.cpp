@@ -9,7 +9,8 @@ void AM_Rand::exploitation(Population &population, unsigned &num_evaluations)
 {
     for (unsigned i = 0; i < POPULATION_SIZE; i++) {
         if (Random::get(0.0, 1.0) < PROB_SELECT_CHROMOSOME) {
-            local_search.do_local_search(population.chromosomes[i], num_evaluations, max_neighbors_gen);
+            local_search.do_local_search(population.chromosomes[i], population.fitness[i], num_evaluations, max_neighbors_gen);
+            evaluated_by_ls[i] = true;
         }
     }
 }

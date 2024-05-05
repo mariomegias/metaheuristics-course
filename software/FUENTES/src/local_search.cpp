@@ -11,6 +11,7 @@ Local_search::Local_search(const string & name, const Data * training, long seed
 {
     Random::seed(seed);
     this->max_neighbors_to_generate = 20 * num_attributes;
+    this->normal = normal_distribution<double>(MEAN, sqrt(VARIANCE));
 }
 
 void Local_search::gen_neighbour(const vector<double> & actual_solution, vector<double> & neighbour, unsigned int pos, normal_distribution<double> & normal) const
@@ -24,12 +25,10 @@ void Local_search::gen_neighbour(const vector<double> & actual_solution, vector<
     }
 }
 
-void Local_search::do_local_search(vector<double> &actual_solution, unsigned &num_evaluations, unsigned max_neighbors_gen)
+void Local_search::do_local_search(vector<double> & actual_solution, double & fitness_act_sol, unsigned & num_evaluations, unsigned max_neighbors_gen)
 {
     if (num_evaluations < MAX_EVALUATIONS)
     {
-        normal_distribution<double> normal(MEAN, sqrt(VARIANCE));
-
         unsigned int num_neighbors_gen = 0;
 
         vector<double> neighbour;
@@ -41,7 +40,8 @@ void Local_search::do_local_search(vector<double> &actual_solution, unsigned &nu
 
         unsigned int pos = 0;
         double fitness_neighbour = -1.0;
-        double fitness_act_sol = compute_fitness(*training, actual_solution);
+
+        fitness_act_sol = compute_fitness(*training, actual_solution);
         num_evaluations++;
 
         Random::shuffle(permutation);
@@ -70,8 +70,9 @@ void Local_search::do_local_search(vector<double> &actual_solution, unsigned &nu
 void Local_search::compute_weights()
 {
     vector<double> actual_solution = Random::get<vector>(0.0, 1.0, num_attributes);
+    double fitness_act_sol;
     unsigned num_evaluations = 0;
-    do_local_search(actual_solution, num_evaluations, max_neighbors_to_generate);
+    do_local_search(actual_solution, fitness_act_sol, num_evaluations, max_neighbors_to_generate);
     weights = actual_solution;
 }
 
