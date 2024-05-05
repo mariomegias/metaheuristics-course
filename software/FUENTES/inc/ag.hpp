@@ -25,9 +25,9 @@ protected:
     unsigned get_pos_worst(const Population & population);
 
     void ini_current_population();
-    void evaluate(Population & population, unsigned & num_evaluations);
-
     void mutation_operator(vector<double> & chromosome, unsigned pos_gene);
+
+    virtual void evaluate(Population & population, unsigned & num_evaluations);
 
     virtual Population select() = 0;
     virtual void mutate(Population & intermediate) = 0;

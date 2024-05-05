@@ -24,8 +24,8 @@ set(SOURCE_FILES
         ${SRC_DIR}/tournament.cpp
 )
 
-#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pg")
-#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pg")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pg")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pg")
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 

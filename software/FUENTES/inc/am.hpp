@@ -7,8 +7,8 @@
 class AM : public AGG
 {
 private:
-    void evaluate(Population & population, unsigned & num_evaluations) override;
     void compute_weights() override;
+    void evaluate(Population & population, unsigned & num_evaluations) override;
 
 protected:
     unsigned max_neighbors_gen;
