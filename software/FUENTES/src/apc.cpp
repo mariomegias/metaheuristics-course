@@ -93,14 +93,14 @@ void APC::add_metaheuristics() {
     for (int i = 0; i < num_sets; i++) {
 //        mh4set.push_back(new Classifier_1NN("1NN", &training_sets[i]));
 //        mh4set.push_back(new Greedy_relief("Greedy", &training_sets[i]));
-        mh4set.push_back(new Local_search("Local search", &training_sets[i], seed));
+//        mh4set.push_back(new Local_search("Local search", &training_sets[i], seed));
 //        mh4set.push_back(new AGG("AGG-BLX", &training_sets[i], seed, CrossingType::BLX));
 //        mh4set.push_back(new AGG("AGG-CA", &training_sets[i], seed, CrossingType::CA));
 //        mh4set.push_back(new AGE("AGE-BLX", &training_sets[i], seed, CrossingType::BLX));
 //        mh4set.push_back(new AGE("AGE-CA", &training_sets[i], seed, CrossingType::CA));
-//        mh4set.push_back(new AM_All("AM_ALL-BLX", &training_sets[i], seed, CrossingType::BLX));
-//        mh4set.push_back(new AM_Best("AM_best-BLX", &training_sets[i], seed, CrossingType::BLX));
-//        mh4set.push_back(new AM_Rand("AM_Rand-BLX", &training_sets[i], seed, CrossingType::BLX));
+        mh4set.push_back(new AM_All("AM_ALL-BLX", &training_sets[i], seed, CrossingType::BLX));
+        mh4set.push_back(new AM_Best("AM_best-BLX", &training_sets[i], seed, CrossingType::BLX));
+        mh4set.push_back(new AM_Rand("AM_Rand-BLX", &training_sets[i], seed, CrossingType::BLX));
         mh.push_back(mh4set);
         mh4set.clear();
     }
