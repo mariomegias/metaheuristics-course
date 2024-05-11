@@ -18,7 +18,7 @@ class AM_Best : public AM
 private:
     static const unsigned N_EXPLOITATIONS;
 
-    void exploitation(Population &population, unsigned &num_evaluations) override;
+    void exploitation(Population &population, unsigned &num_evaluations, unsigned max_neighbors_gen) override;
 
 public:
     AM_Best(const string & name, const Data * training, long seed, CrossingType crossing_type);

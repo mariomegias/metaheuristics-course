@@ -5,7 +5,7 @@ const unsigned AM_Best::N_EXPLOITATIONS = 5;
 AM_Best::AM_Best(const string & name, const Data * training, long seed, CrossingType crossing_type)
 : AM(name, training, seed, crossing_type) {}
 
-void AM_Best::exploitation(Population &population, unsigned &num_evaluations)
+void AM_Best::exploitation(Population &population, unsigned &num_evaluations, unsigned max_neighbors_gen)
 {
     priority_queue<pair<unsigned, double>, vector<pair<unsigned, double>>, Compare_AM> ordering_pos_by_fit;
 
@@ -13,14 +13,17 @@ void AM_Best::exploitation(Population &population, unsigned &num_evaluations)
         ordering_pos_by_fit.emplace(i, population.fitness[i]);
     }
 
-    unsigned count = 0;
-    while (count < N_EXPLOITATIONS) {
-        local_search.do_local_search(population.chromosomes[ordering_pos_by_fit.top().first],
-                                     population.fitness[ordering_pos_by_fit.top().first],
-                                     num_evaluations, max_neighbors_gen);
-        evaluated_by_ls[ordering_pos_by_fit.top().first] = true;
+    unsigned evaluations_limit = MAX_EVALUATIONS - num_evaluations;
+    unsigned position = ordering_pos_by_fit.top().first;
+    unsigned count_exploitations = 0;
+
+    while ((count_exploitations < N_EXPLOITATIONS) && (evaluations_limit > 0))
+    {
+        num_evaluations += local_search.do_local_search(population.chromosomes[position],population.fitness[position], max_neighbors_gen, evaluations_limit);
         ordering_pos_by_fit.pop();
-        count++;
+        evaluations_limit = MAX_EVALUATIONS - num_evaluations;
+        position = ordering_pos_by_fit.top().first;
+        count_exploitations++;
     }
 }
 

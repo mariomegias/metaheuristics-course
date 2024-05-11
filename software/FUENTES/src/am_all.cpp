@@ -3,11 +3,13 @@
 AM_All::AM_All(const string & name, const Data * training, long seed, CrossingType crossing_type)
 : AM(name, training, seed, crossing_type) {}
 
-void AM_All::exploitation(Population &population, unsigned &num_evaluations)
+void AM_All::exploitation(Population &population, unsigned &num_evaluations, unsigned max_neighbors_gen)
 {
-    for (unsigned i = 0; i < POPULATION_SIZE; i++) {
-        local_search.do_local_search(population.chromosomes[i], population.fitness[i], num_evaluations, max_neighbors_gen);
-        evaluated_by_ls[i] = true;
+    unsigned evaluations_limit = MAX_EVALUATIONS - num_evaluations;
+
+    for (unsigned i = 0; (i < POPULATION_SIZE) && (evaluations_limit > 0); i++) {
+        num_evaluations += local_search.do_local_search(population.chromosomes[i], population.fitness[i], max_neighbors_gen, evaluations_limit);
+        evaluations_limit = MAX_EVALUATIONS - num_evaluations;
     }
 }
 
