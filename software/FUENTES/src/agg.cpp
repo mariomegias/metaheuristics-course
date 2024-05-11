@@ -5,42 +5,10 @@ const unsigned AGG::N_EXPECTED_CROSSINGS = 17;
 const unsigned AGG::N_EXPECTED_MUTATIONS = 4;
 
 AGG::AGG(const string & name, const Data * training, long seed, CrossingType crossing_type)
-: AG(name, training, seed)
+: AG(name, training, seed, crossing_type)
 {
-    this->tournament = Tournament();
-    this->crossing_type = crossing_type;
-
-    switch (crossing_type)
-    {
-        case CrossingType::BLX:
-            crossing = new BLX();
-            break;
-        case CrossingType::CA:
-            crossing = new CA();
-            break;
-    }
-}
-
-Population AGG::select()
-{
-    unsigned pos_winner;
-    vector<vector<double>> chromosomes;
-    vector<double> fitness;
-
-    for (unsigned i = 0; i < N_CHROMOSOMES_SELECT; i++) {
-        pos_winner = tournament.get_pos_winner(current_population);
-        chromosomes.push_back(current_population.chromosomes[pos_winner]);
-        fitness.push_back(current_population.fitness[pos_winner]);
-    }
-
-    return {chromosomes, fitness};
-}
-
-void AGG::cross(Population & parents)
-{
-    for (unsigned i = 0; i < N_EXPECTED_CROSSINGS; i+=2) {
-        crossing->cross(parents.chromosomes[i], parents.chromosomes[i+1]);
-    }
+    this->n_chromosomes_select = N_CHROMOSOMES_SELECT;
+    this->n_expected_crossings = N_EXPECTED_CROSSINGS;
 }
 
 void AGG::mutate(Population & intermediate)

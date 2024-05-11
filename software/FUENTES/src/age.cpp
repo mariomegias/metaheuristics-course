@@ -1,42 +1,13 @@
 #include "../inc/age.hpp"
 
 const unsigned AGE::N_CHROMOSOMES_SELECT = 2;
+const unsigned AGE::N_EXPECTED_CROSSINGS = 1;
 
 AGE::AGE(const string & name, const Data * training, long seed, CrossingType crossing_type)
-: AG(name, training, seed)
+: AG(name, training, seed, crossing_type)
 {
-    this->tournament = Tournament();
-    this->crossing_type = crossing_type;
-
-    switch (crossing_type)
-    {
-        case CrossingType::BLX:
-            crossing = new BLX();
-            break;
-        case CrossingType::CA:
-            crossing = new CA();
-            break;
-    }
-}
-
-Population AGE::select()
-{
-    unsigned pos_winner = 0;
-    vector<vector<double>> chromosomes;
-    vector<double> fitness;
-
-    for (unsigned i = 0; i < N_CHROMOSOMES_SELECT; i++) {
-        pos_winner = tournament.get_pos_winner(current_population);
-        chromosomes.push_back(current_population.chromosomes[pos_winner]);
-        fitness.push_back(current_population.fitness[pos_winner]);
-    }
-
-    return {chromosomes, fitness};
-}
-
-void AGE::cross(Population & parents)
-{
-    crossing->cross(parents.chromosomes[0], parents.chromosomes[1]);
+    this->n_chromosomes_select = N_CHROMOSOMES_SELECT;
+    this->n_expected_crossings = N_EXPECTED_CROSSINGS;
 }
 
 void AGE::mutate(Population & intermediate)
@@ -86,3 +57,4 @@ void AGE::replace(Population & children)
     current_population.chromosomes[worst_positions[1]] = rivals.top().first;
     current_population.fitness[worst_positions[1]] = rivals.top().second;
 }
+

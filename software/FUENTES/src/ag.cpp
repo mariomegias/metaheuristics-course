@@ -7,11 +7,24 @@ const double AG::PROB_MUTATION_CHROMOSOME = 0.08;
 const unsigned AG::MAX_EVALUATIONS = 15000;
 const unsigned AG::POPULATION_SIZE = 50;
 
-AG::AG(const string & name, const Data * training, long seed)
+AG::AG(const string & name, const Data * training, long seed, CrossingType crossing_type)
 : Metaheuristics(name, training)
 {
     Random::seed(seed);
     this->normal = normal_distribution<double>(MEAN, sqrt(VARIANCE));
+
+    this->tournament = Tournament();
+    this->crossing_type = crossing_type;
+
+    switch (crossing_type)
+    {
+        case CrossingType::BLX:
+            crossing = new BLX();
+            break;
+        case CrossingType::CA:
+            crossing = new CA();
+            break;
+    }
 }
 
 void AG::mutation_operator(vector<double> & chromosome, unsigned pos_gene)
@@ -38,6 +51,28 @@ void AG::evaluate(Population & population, unsigned & num_evaluations)
     for (unsigned i = 0; i < N_CHROMOSOMES; i++) {
         population.fitness[i] = compute_fitness(*training, population.chromosomes[i]);
         num_evaluations++;
+    }
+}
+
+Population AG::select()
+{
+    unsigned pos_winner;
+    vector<vector<double>> chromosomes;
+    vector<double> fitness;
+
+    for (unsigned i = 0; i < n_chromosomes_select; i++) {
+        pos_winner = tournament.get_pos_winner(current_population);
+        chromosomes.push_back(current_population.chromosomes[pos_winner]);
+        fitness.push_back(current_population.fitness[pos_winner]);
+    }
+
+    return {chromosomes, fitness};
+}
+
+void AG::cross(Population & parents)
+{
+    for (unsigned i = 0; i < n_expected_crossings; i+=2) {
+        crossing->cross(parents.chromosomes[i], parents.chromosomes[i+1]);
     }
 }
 

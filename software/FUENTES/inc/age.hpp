@@ -2,9 +2,6 @@
 #define AGE_HPP
 
 #include "ag.hpp"
-#include "blx.hpp"
-#include "ca.hpp"
-#include "tournament.hpp"
 #include <queue>
 #include <utility>
 
@@ -20,17 +17,12 @@ class AGE : public AG
 {
 private:
     static const unsigned N_CHROMOSOMES_SELECT;
-
-    CrossingType crossing_type;
-    Crossing * crossing;
-    Tournament tournament;
+    static const unsigned N_EXPECTED_CROSSINGS;
 
     void get_two_worst_pos(vector<unsigned> & worst_positions);
 
 protected:
-    Population select() override;
     void mutate(Population & intermediate) override;
-    void cross(Population & parents) override;
     void replace(Population & children) override;
 
 public:
