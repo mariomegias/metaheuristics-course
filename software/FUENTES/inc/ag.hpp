@@ -35,9 +35,7 @@ protected:
 
     void ini_current_population();
     void mutation_operator(vector<double> & chromosome, unsigned pos_gene);
-
-    virtual void evaluate(Population & population, unsigned & num_evaluations);
-
+    void evaluate(Population & population, unsigned & num_evaluations);
     Population select();
     void cross(Population & parents);
 
