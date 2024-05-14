@@ -25,6 +25,10 @@ AG::AG(const string & name, const Data * training, long seed, CrossingType cross
             crossing = new CA();
             break;
     }
+
+    // Initial values without meaning. Reinitialize in subclasses.
+    this->n_chromosomes_select = 0;
+    this->n_expected_crossings = 0;
 }
 
 void AG::mutation_operator(vector<double> & chromosome, unsigned pos_gene)
@@ -42,6 +46,8 @@ void AG::ini_current_population()
     for (unsigned i = 0; i < POPULATION_SIZE; i++) {
         current_population.chromosomes.push_back(Random::get<vector>(0.0, 1.0, num_attributes));
     }
+
+    // Initial values without meaning. This population will immediately evaluate with evaluate function.
     current_population.fitness = vector<double>(POPULATION_SIZE, 0.0);
 }
 

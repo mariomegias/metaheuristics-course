@@ -8,7 +8,7 @@ void AM::compute_weights()
 {
     unsigned num_evaluations = 0;
     unsigned num_generations = 0;
-    unsigned max_neighbours_gen = 2 * num_attributes;
+    unsigned max_neighbors_gen = 2 * num_attributes;
     Population aux_population;
 
     ini_current_population();
@@ -20,7 +20,7 @@ void AM::compute_weights()
         mutate(aux_population);
         evaluate(aux_population, num_evaluations);
         if (num_generations % 9 == 0) {
-            exploitation(aux_population, num_evaluations, max_neighbours_gen);
+            exploitation(aux_population, num_evaluations, max_neighbors_gen);
         }
         replace(aux_population);
         num_generations++;
