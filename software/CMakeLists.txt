@@ -22,6 +22,7 @@ set(SOURCE_FILES
         ${SRC_DIR}/am_rand.cpp
         ${SRC_DIR}/am_best.cpp
         ${SRC_DIR}/tournament.cpp
+        ${SRC_DIR}/es.cpp
 )
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")

@@ -39,9 +39,27 @@ procedemos a describir el contenido de cada un fichero con las clases y estructu
         los valores restantes. Si antes de llamar a la función no se ha ejecutado el algoritmo de
         cálculo de los pesos, se llama previamente al método train.
 
-    - classifier_1NN.hpp/.cpp, greedy_relief.hpp/.cpp, local_search.hpp/.cpp: Implementan clases que
-    heredan de la clase Metaheuristics, Classifier_1NN, Greedy_relief y Local_search. Cada una realiza
-    su propia implementación del método compute_weights, siguiendo el algoritmo correspondiente.
+    - classifier_1NN.hpp/.cpp, greedy_relief.hpp/.cpp, local_search.hpp/.cpp, ag.hpp/.cpp: Implementan
+    clases que heredan de la clase Metaheuristics, Classifier_1NN, Greedy_relief, Local_search y AG.
+    Cada una realiza su propia implementación del método compute_weights, siguiendo el algoritmo correspondiente.
+
+    - agg.hpp/.cpp, age.hpp/.cpp: Implementan clases que heredan de la clase AG, AGG y AGE. Cada una realiza sus
+    propias implementaciones de los métodos mutate y replace, siguiendo el algoritmo correspondiente.
+
+    - am.hpp/.cpp: Implementa una clase que hereda de la clase AGG, AM. Realiza su propia implementación del
+     método compute_weights, siguiendo el algoritmo correspondiente.
+
+    - am_all.hpp/.cpp, am_best.hpp/.cpp, am_rand.hpp/.cpp: Implementan clases que heredan de la clase AM, AM_All,
+    AM_Best y AM_Rand. Cada una realiza su propia implementación del método exploitation, siguiendo el algoritmo
+    correspondiente.
+
+    - crossing.hpp: interfaz usada para definir los operadores de cruce.
+
+    - blx.hpp/.cpp, ca.hpp/.cpp: Implementan clases que realizan la interfaz anterior, BLX y CA. Cada una realiza su
+    propia implementación del método cross.
+
+    - tournament.hpp/.cpp: Implementa la clase Tournament, encargada de llevar a cabo el torneo entre individuos de una
+    población.
 
     - apc.hpp/.cpp: contiene la clase APC que recibe una semilla y los ficheros de una de las bases de
     datos e implementa 5-fold cross validation a cada uno de los diferentes algoritmos implementados para
