@@ -7,6 +7,7 @@
 #include "am_best.hpp"
 #include "am_rand.hpp"
 #include "arff_file.hpp"
+#include "bmb.hpp"
 #include "classifier_1NN.hpp"
 #include "es.hpp"
 #include "structures.hpp"

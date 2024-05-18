@@ -1,7 +1,5 @@
 #include "../inc/es.hpp"
 
-// CAMBIAR EL NOMBRE DE LA CLASE?
-
 const unsigned ES::MAX_EVALUATIONS = 15000;
 const double ES::MEAN = 0.0;
 const double ES::VARIANCE = 0.3;

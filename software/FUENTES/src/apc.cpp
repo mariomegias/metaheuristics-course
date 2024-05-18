@@ -101,7 +101,8 @@ void APC::add_metaheuristics() {
 //        mh4set.push_back(new AM_All("AM_ALL-BLX", &training_sets[i], seed, CrossingType::BLX));
 //        mh4set.push_back(new AM_Best("AM_best-BLX", &training_sets[i], seed, CrossingType::BLX));
 //        mh4set.push_back(new AM_Rand("AM_Rand-BLX", &training_sets[i], seed, CrossingType::BLX));
-        mh4set.push_back(new ES("ES", &training_sets[i], seed));
+//        mh4set.push_back(new ES("ES", &training_sets[i], seed));
+        mh4set.push_back(new BMB("BMB", &training_sets[i], seed));
         mh.push_back(mh4set);
         mh4set.clear();
     }
