@@ -2,12 +2,13 @@
 #define ES_HPP
 
 #include "metaheuristics.hpp"
+#include "neighborhood_search.hpp"
 #include "random.hpp"
 #include <cmath>
 
 using Random = effolkronium::random_static;
 
-class ES : public Metaheuristics
+class ES : public Metaheuristics, public Neighborhood_search
 {
 private:
     static const unsigned MAX_EVALUATIONS;
@@ -24,6 +25,7 @@ private:
 
 public:
     ES(const string & name, const Data * training, long seed);
+    unsigned do_search(vector<double> & act_sol, double & fitness_act_sol, unsigned max_neighbors, unsigned eval_limit) override;
 };
 
 #endif // ifndef ES_HPP

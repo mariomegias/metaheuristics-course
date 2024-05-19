@@ -2,10 +2,11 @@
 #define LOCAL_SEARCH_HPP
 
 #include "metaheuristics.hpp"
+#include "neighborhood_search.hpp"
 #include "random.hpp"
 #include <cmath>
 
-class Local_search : public Metaheuristics
+class Local_search : public Metaheuristics, public Neighborhood_search
 {
 private:
     static const double MEAN;
@@ -19,7 +20,7 @@ private:
 
 public:
     Local_search(const string & name, const Data * training, long seed);
-    unsigned do_local_search(vector<double> & actual_solution, double & fitness_act_sol, unsigned max_neighbors_gen, unsigned evaluations_limit);
+    unsigned do_search(vector<double> & act_sol, double & fitness_act_sol, unsigned max_neighbors, unsigned eval_limit) override;
 };
 
 #endif // ifndef LOCAL_SEARCH_HPP

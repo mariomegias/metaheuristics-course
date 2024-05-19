@@ -19,7 +19,7 @@ void AM_Best::exploitation(Population &population, unsigned &num_evaluations, un
 
     while ((count_exploitations < N_EXPLOITATIONS) && (evaluations_limit > 0))
     {
-        num_evaluations += local_search.do_local_search(population.chromosomes[position],population.fitness[position], max_neighbors_gen, evaluations_limit);
+        num_evaluations += local_search.do_search(population.chromosomes[position], population.fitness[position],max_neighbors_gen, evaluations_limit);
         ordering_pos_by_fit.pop();
         evaluations_limit = MAX_EVALUATIONS - num_evaluations;
         position = ordering_pos_by_fit.top().first;

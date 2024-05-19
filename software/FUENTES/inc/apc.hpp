@@ -10,6 +10,7 @@
 #include "bmb.hpp"
 #include "classifier_1NN.hpp"
 #include "es.hpp"
+#include "ils.hpp"
 #include "structures.hpp"
 #include "greedy_relief.hpp"
 #include "local_search.hpp"

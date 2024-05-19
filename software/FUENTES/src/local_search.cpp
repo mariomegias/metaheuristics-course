@@ -24,7 +24,7 @@ void Local_search::gen_neighbour(const vector<double> & actual_solution, vector<
     }
 }
 
-unsigned Local_search::do_local_search(vector<double> & actual_solution, double & fitness_act_sol, unsigned max_neighbors_gen, unsigned evaluations_limit)
+unsigned Local_search::do_search(vector<double> & act_sol, double & fitness_act_sol, unsigned max_neighbors, unsigned eval_limit)
 {
     vector<double> neighbor;
     double fitness_neighbor;
@@ -41,14 +41,14 @@ unsigned Local_search::do_local_search(vector<double> & actual_solution, double 
     unsigned count_evaluations = 0;
     unsigned num_neighbors_gen = 0;
 
-    while ((num_neighbors_gen < max_neighbors_gen) && (count_evaluations < evaluations_limit))
+    while ((num_neighbors_gen < max_neighbors) && (count_evaluations < eval_limit))
     {
-        gen_neighbour(actual_solution , neighbor, position);
+        gen_neighbour(act_sol , neighbor, position);
         num_neighbors_gen++;
         fitness_neighbor = compute_fitness(*training, neighbor);
         count_evaluations++;
         if (fitness_neighbor > fitness_act_sol) {
-            actual_solution = neighbor;
+            act_sol = neighbor;
             fitness_act_sol = fitness_neighbor;
             num_neighbors_gen = 0;
             Random::shuffle(permutation);
@@ -66,13 +66,13 @@ unsigned Local_search::do_local_search(vector<double> & actual_solution, double 
 
 void Local_search::compute_weights()
 {
-    vector<double> actual_solution = Random::get<vector>(0.0, 1.0, num_attributes);
-    double fitness_act_sol = compute_fitness(*training, actual_solution);
-    unsigned max_neighbours_gen = 20 * num_attributes;
-    unsigned evaluations_limit = MAX_EVALUATIONS - 1;
+    unsigned max_neighbors = 20 * num_attributes;
 
-    do_local_search(actual_solution, fitness_act_sol, max_neighbours_gen, evaluations_limit);
+    vector<double> act_sol(Random::get<vector>(0.0, 1.0, num_attributes));
+    double fitness_act_sol = compute_fitness(*training, act_sol);
 
-    weights = actual_solution;
+    do_search(act_sol, fitness_act_sol, max_neighbors, MAX_EVALUATIONS - 1);
+
+    this->weights = act_sol;
 }
 

@@ -24,10 +24,11 @@ set(SOURCE_FILES
         ${SRC_DIR}/tournament.cpp
         ${SRC_DIR}/es.cpp
         ${SRC_DIR}/bmb.cpp
+        ${SRC_DIR}/ils.cpp
 )
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pg -O2")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pg -O2")
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 

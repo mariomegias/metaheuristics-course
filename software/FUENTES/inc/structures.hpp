@@ -14,6 +14,8 @@ enum class Dataset {ecoli, parkinsons, breast_cancer};
 
 enum class CrossingType {BLX, CA};
 
+enum class NeighborhoodSearchType {LS, ES};
+
 struct Data
 {
     vector<vector<double>> input;

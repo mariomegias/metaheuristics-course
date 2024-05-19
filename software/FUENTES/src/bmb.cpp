@@ -23,7 +23,7 @@ void BMB::compute_weights()
 
     while (n_iterations < MAX_ITERATIONS)
     {
-        local_search.do_local_search(act_sol, fitness_act_sol, max_neighbours, eval_limit);
+        local_search.do_search(act_sol, fitness_act_sol, max_neighbours, eval_limit);
 
         if (fitness_best_sol < fitness_act_sol) {
             best_sol = act_sol;

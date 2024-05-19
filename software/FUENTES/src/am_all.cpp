@@ -8,7 +8,7 @@ void AM_All::exploitation(Population &population, unsigned &num_evaluations, uns
     unsigned evaluations_limit = MAX_EVALUATIONS - num_evaluations;
 
     for (unsigned i = 0; (i < POPULATION_SIZE) && (evaluations_limit > 0); i++) {
-        num_evaluations += local_search.do_local_search(population.chromosomes[i], population.fitness[i], max_neighbors_gen, evaluations_limit);
+        num_evaluations += local_search.do_search(population.chromosomes[i], population.fitness[i], max_neighbors_gen, evaluations_limit);
         evaluations_limit = MAX_EVALUATIONS - num_evaluations;
     }
 }

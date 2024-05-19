@@ -11,7 +11,7 @@ void AM_Rand::exploitation(Population &population, unsigned &num_evaluations, un
 
     for (unsigned i = 0; (i < POPULATION_SIZE) && (evaluations_limit > 0); i++) {
         if (Random::get(0.0, 1.0) < PROB_SELECT_CHROMOSOME) {
-            num_evaluations += local_search.do_local_search(population.chromosomes[i], population.fitness[i], max_neighbors_gen, evaluations_limit);
+            num_evaluations += local_search.do_search(population.chromosomes[i], population.fitness[i],max_neighbors_gen, evaluations_limit);
             evaluations_limit = MAX_EVALUATIONS - num_evaluations;
         }
     }
