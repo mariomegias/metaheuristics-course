@@ -7,10 +7,9 @@ const double AG::PROB_MUTATION_CHROMOSOME = 0.08;
 const unsigned AG::MAX_EVALUATIONS = 15000;
 const unsigned AG::POPULATION_SIZE = 50;
 
-AG::AG(const string & name, const Data * training, long seed, CrossingType crossing_type)
+AG::AG(const string & name, const Data * training, CrossingType crossing_type)
 : Metaheuristics(name, training)
 {
-    Random::seed(seed);
     this->normal = normal_distribution<double>(MEAN, sqrt(VARIANCE));
 
     this->tournament = Tournament();

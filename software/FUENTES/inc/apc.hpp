@@ -27,7 +27,6 @@ private:
     unsigned int num_sets;
     unsigned int num_mh;
 
-    long seed;
     bool trained;
 
     void normalize(vector<Data> & data);
@@ -35,7 +34,7 @@ private:
     void process_partition(const vector<Data> & data, int pos_test, Data & training, Data & testing);
 
 public:
-    APC(const vector<string> & file_names, long seed);
+    APC(const vector<string> & file_names);
     void train();
     void test();
     void get_train_results(vector<vector<Result>> & train_results);

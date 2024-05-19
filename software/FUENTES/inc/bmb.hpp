@@ -17,7 +17,7 @@ private:
     void compute_weights() override;
 
 public:
-    BMB(const string & name, const Data * training, long seed);
+    BMB(const string & name, const Data * training);
 };
 
 #endif // ifndef BMB_HPP

@@ -21,7 +21,7 @@ private:
     void compute_weights() override;
 
 public:
-    ILS(const string & name, const Data * training, long seed, NeighborhoodSearchType type);
+    ILS(const string & name, const Data * training, NeighborhoodSearchType type);
 };
 
 #endif // ifndef ILS_HPP

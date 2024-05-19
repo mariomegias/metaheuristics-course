@@ -26,7 +26,7 @@ protected:
     void replace(Population & children) override;
 
 public:
-    AGE(const string & name, const Data * training, long seed, CrossingType crossing_type);
+    AGE(const string & name, const Data * training, CrossingType crossing_type);
 };
 
 

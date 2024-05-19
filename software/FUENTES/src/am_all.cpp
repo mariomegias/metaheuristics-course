@@ -1,7 +1,7 @@
 #include "../inc/am_all.hpp"
 
-AM_All::AM_All(const string & name, const Data * training, long seed, CrossingType crossing_type)
-: AM(name, training, seed, crossing_type) {}
+AM_All::AM_All(const string & name, const Data * training, CrossingType crossing_type)
+: AM(name, training, crossing_type) {}
 
 void AM_All::exploitation(Population &population, unsigned &num_evaluations, unsigned max_neighbors_gen)
 {

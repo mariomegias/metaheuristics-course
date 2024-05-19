@@ -3,20 +3,18 @@
 const unsigned ILS::MAX_EVALUATIONS = 750;
 const unsigned ILS::MAX_ITERATIONS = 20;
 
-ILS::ILS(const string & name, const Data * training, long seed, NeighborhoodSearchType type)
+ILS::ILS(const string & name, const Data * training, NeighborhoodSearchType type)
 : Metaheuristics(name, training)
 {
-    Random::seed(seed);
-
     this->neighborhood_search_type = type;
 
     switch (neighborhood_search_type)
     {
         case NeighborhoodSearchType::LS:
-            this->neighborhood_search = new Local_search(name, training, seed);
+            this->neighborhood_search = new Local_search(name, training);
             break;
         case NeighborhoodSearchType::ES:
-            this->neighborhood_search = new ES(name, training, seed);
+            this->neighborhood_search = new ES(name, training);
             break;
     }
 }

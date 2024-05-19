@@ -45,7 +45,7 @@ protected:
     void compute_weights() override;
 
 public:
-    AG(const string & name, const Data * training, long seed, CrossingType crossing_type);
+    AG(const string & name, const Data * training, CrossingType crossing_type);
 };
 
 

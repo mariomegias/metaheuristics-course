@@ -3,11 +3,9 @@
 const unsigned BMB::MAX_EVALUATIONS_LS = 750;
 const unsigned BMB::MAX_ITERATIONS = 20;
 
-BMB::BMB(const string & name, const Data * training, long seed)
-: Metaheuristics(name, training), local_search(Local_search(name, training, seed))
-{
-    Random::seed(seed);
-}
+BMB::BMB(const string & name, const Data * training)
+: Metaheuristics(name, training), local_search(Local_search(name, training))
+{}
 
 void BMB::compute_weights()
 {

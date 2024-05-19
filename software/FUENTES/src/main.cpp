@@ -71,8 +71,6 @@ void show_results_csv(Dataset dataset_name, vector<vector<Result>> & results, co
 
     unsigned int num_sets = results.size();
     unsigned int num_mh = results[0].size();
-    unsigned int num_attributes = results[0][0].w.size();
-    unsigned int top = num_attributes - 1;
 
     double sum_tasa_clas = 0;
     double sum_tasa_red = 0;
@@ -124,6 +122,8 @@ int main(int argc, char** argv)
     string curr_arg;
     long seed = stol(argv[1]);
 
+    Random::seed(seed);
+
     string path = "Instancias_APC/";
 
     vector<string> ecoli;
@@ -166,7 +166,7 @@ int main(int argc, char** argv)
 
     unsigned int num_data_sets = data_sets.size();
     for (int i = 0; i < num_data_sets; ++i) {
-        APC apc(data_sets[i], seed);
+        APC apc(data_sets[i]);
         apc.test();
         apc.get_test_results(test_results);
         show_results(Dataset(i), test_results, sep);

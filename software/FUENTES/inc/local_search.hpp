@@ -19,7 +19,7 @@ private:
     void compute_weights() override;
 
 public:
-    Local_search(const string & name, const Data * training, long seed);
+    Local_search(const string & name, const Data * training);
     unsigned do_search(vector<double> & act_sol, double & fitness_act_sol, unsigned max_neighbors, unsigned eval_limit) override;
 };
 

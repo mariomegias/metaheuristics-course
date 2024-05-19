@@ -3,8 +3,8 @@
 const unsigned AGE::N_CHROMOSOMES_SELECT = 2;
 const unsigned AGE::N_EXPECTED_CROSSINGS = 1;
 
-AGE::AGE(const string & name, const Data * training, long seed, CrossingType crossing_type)
-: AG(name, training, seed, crossing_type)
+AGE::AGE(const string & name, const Data * training, CrossingType crossing_type)
+: AG(name, training, crossing_type)
 {
     this->n_chromosomes_select = N_CHROMOSOMES_SELECT;
     this->n_expected_crossings = N_EXPECTED_CROSSINGS;

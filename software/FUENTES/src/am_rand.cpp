@@ -2,8 +2,8 @@
 
 const double AM_Rand::PROB_SELECT_CHROMOSOME = 0.1;
 
-AM_Rand::AM_Rand(const string & name, const Data * training, long seed, CrossingType crossing_type)
-: AM(name, training, seed, crossing_type) {}
+AM_Rand::AM_Rand(const string & name, const Data * training, CrossingType crossing_type)
+: AM(name, training, crossing_type) {}
 
 void AM_Rand::exploitation(Population &population, unsigned &num_evaluations, unsigned max_neighbors_gen)
 {

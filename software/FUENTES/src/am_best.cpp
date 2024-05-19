@@ -2,8 +2,8 @@
 
 const unsigned AM_Best::N_EXPLOITATIONS = 5;
 
-AM_Best::AM_Best(const string & name, const Data * training, long seed, CrossingType crossing_type)
-: AM(name, training, seed, crossing_type) {}
+AM_Best::AM_Best(const string & name, const Data * training, CrossingType crossing_type)
+: AM(name, training, crossing_type) {}
 
 void AM_Best::exploitation(Population &population, unsigned &num_evaluations, unsigned max_neighbors_gen)
 {

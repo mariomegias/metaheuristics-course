@@ -6,10 +6,9 @@ const unsigned Local_search::MAX_EVALUATIONS = 15000;
 
 using Random = effolkronium::random_static;
 
-Local_search::Local_search(const string & name, const Data * training, long seed)
+Local_search::Local_search(const string & name, const Data * training)
 : Metaheuristics(name, training)
 {
-    Random::seed(seed);
     this->normal = normal_distribution<double>(MEAN, sqrt(VARIANCE));
 }
 

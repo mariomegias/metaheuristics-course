@@ -18,7 +18,7 @@ protected:
     void replace(Population & children) override;
 
 public:
-    AGG(const string & name, const Data * training, long seed, CrossingType crossing_type);
+    AGG(const string & name, const Data * training, CrossingType crossing_type);
 };
 
 

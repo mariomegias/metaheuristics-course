@@ -15,7 +15,7 @@ protected:
     virtual void exploitation(Population & population, unsigned & num_evaluations, unsigned max_neighbors_gen) = 0;
 
 public:
-    AM(const string & name, const Data * training, long seed, CrossingType crossing_type);
+    AM(const string & name, const Data * training, CrossingType crossing_type);
 };
 
 #endif // ifndef AM_HPP

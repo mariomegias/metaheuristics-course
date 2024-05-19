@@ -1,8 +1,8 @@
 #include "../inc/am.hpp"
 
-AM::AM(const string & name, const Data * training, long seed, CrossingType crossing_type)
-:   AGG(name, training, seed, crossing_type),
-    local_search(Local_search(name, training, seed)) {}
+AM::AM(const string & name, const Data * training, CrossingType crossing_type)
+:   AGG(name, training, crossing_type),
+    local_search(Local_search(name, training)) {}
 
 void AM::compute_weights()
 {

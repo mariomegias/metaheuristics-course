@@ -4,8 +4,8 @@ const unsigned AGG::N_CHROMOSOMES_SELECT = 50;
 const unsigned AGG::N_EXPECTED_CROSSINGS = 17;
 const unsigned AGG::N_EXPECTED_MUTATIONS = 4;
 
-AGG::AGG(const string & name, const Data * training, long seed, CrossingType crossing_type)
-: AG(name, training, seed, crossing_type)
+AGG::AGG(const string & name, const Data * training, CrossingType crossing_type)
+: AG(name, training, crossing_type)
 {
     this->n_chromosomes_select = N_CHROMOSOMES_SELECT;
     this->n_expected_crossings = N_EXPECTED_CROSSINGS;

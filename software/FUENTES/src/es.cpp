@@ -7,10 +7,9 @@ const double ES::PHI = 0.3;
 const double ES::MU = 0.1;
 const double ES::FIN_TEMP= 0.001;
 
-ES::ES(const string & name, const Data * training, long seed)
+ES::ES(const string & name, const Data * training)
 : Metaheuristics(name, training)
 {
-    Random::seed(seed);
     this->normal = normal_distribution<double>(MEAN, sqrt(VARIANCE));
 }
 
