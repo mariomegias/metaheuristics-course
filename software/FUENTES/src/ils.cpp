@@ -14,27 +14,29 @@ ILS::ILS(const string & name, const Data * training, NeighborhoodSearchType type
             this->neighborhood_search = new Local_search(name, training);
             break;
         case NeighborhoodSearchType::ES:
-            this->neighborhood_search = new ES(name, training);
+            this->neighborhood_search = new ES(name, training, MAX_EVALUATIONS);
             break;
     }
 }
 
 vector<double> ILS::mutation_operator(const vector<double> & best_sol, unsigned n_attributes_to_change)
 {
-    unsigned count = 0, pos;
     vector<double> mutate_sol(best_sol);
+    vector<unsigned> permutation;
 
-    while (count < n_attributes_to_change) {
-        pos = Random::get<unsigned>(0, num_attributes - 1);
-        mutate_sol[pos] += Random::get(-0.25, 0.25);
+    for (unsigned i = 0; i < num_attributes; i++) {
+        permutation.push_back(i);
+    }
 
-        if (mutate_sol[pos] < 0.0) {
-            mutate_sol[pos] = 0.0;
-        } else if (mutate_sol[pos] > 1.0) {
-            mutate_sol[pos] = 1.0;
+    Random::shuffle(permutation);
+
+    for (unsigned i = 0; i < n_attributes_to_change; i++) {
+        mutate_sol[i] += Random::get(-0.25, 0.25);
+        if (mutate_sol[i] < 0.0) {
+            mutate_sol[i] = 0.0;
+        } else if (mutate_sol[i] > 1.0) {
+            mutate_sol[i] = 1.0;
         }
-
-        count++;
     }
 
     return mutate_sol;
@@ -43,10 +45,10 @@ vector<double> ILS::mutation_operator(const vector<double> & best_sol, unsigned 
 void ILS::compute_weights()
 {
     unsigned n_iterations = 0;
-    unsigned max_neighbours = 20 * num_attributes;  // esta bien??
+    unsigned max_neighbours = 20 * num_attributes;
     unsigned eval_limit = MAX_EVALUATIONS - 1;
 
-    auto t = (unsigned)(round(0.2 * num_attributes));
+    auto t = (unsigned)(floor(0.2 * num_attributes));
     if (t < 3) {
         t = 3;
     }
