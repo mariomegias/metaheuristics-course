@@ -10,7 +10,7 @@ BMB::BMB(const string & name, const Data * training)
 void BMB::compute_weights()
 {
     unsigned n_iterations = 0;
-    unsigned max_neighbours = 20 * num_attributes;  // esta bien??
+    unsigned max_neighbours = 20 * num_attributes;
     unsigned eval_limit = MAX_EVALUATIONS_LS - 1;
 
     vector<double> act_sol = Random::get<vector>(0.0, 1.0, num_attributes);
